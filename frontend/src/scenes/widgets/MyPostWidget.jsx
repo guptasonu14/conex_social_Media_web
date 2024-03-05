@@ -75,7 +75,7 @@ import {
         </FlexBetween>
         {isImage && (
           <Box
-            border={`1px solid ${medium}`}
+            border={`1px solid ${medium}` }
             borderRadius="5px"
             mt="1rem"
             p="1rem"
