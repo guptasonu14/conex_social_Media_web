@@ -1,10 +1,8 @@
+import React from 'react'
 
-
-function FlexBetween() {
+const FlexBetween = () => {
   return (
-    <div>
-      
-    </div>
+    <div>FlexBetween</div>
   )
 }
 

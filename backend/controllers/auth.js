@@ -4,6 +4,7 @@ import User from "../models/User.js";
 
 /* REGISTER USER */
 export const register = async (req, res) => {
+    console.log(req);
   try {
     const {
       firstName,
@@ -12,7 +13,6 @@ export const register = async (req, res) => {
       password,
       picturePath,
       friends,
-      
       occupation,
     } = req.body;
 
@@ -26,7 +26,6 @@ export const register = async (req, res) => {
       password: passwordHash,
       picturePath,
       friends,
-    
       occupation,
       viewedProfile: Math.floor(Math.random() * 10000),
       impressions: Math.floor(Math.random() * 10000),
