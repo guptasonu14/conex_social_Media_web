@@ -12,16 +12,16 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setLogin } from "../../state/index"
+import { setLogin } from "../../state/index";
 import Dropzone from "react-dropzone";
-import FlexBetween from "../../components/FlexBetween"
+import FlexBetween from "../../components/FlexBetween";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
   lastName: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
- 
+
   occupation: yup.string().required("required"),
   picture: yup.string().required("required"),
 });
@@ -36,7 +36,7 @@ const initialValuesRegister = {
   lastName: "",
   email: "",
   password: "",
-  
+
   occupation: "",
   picture: "",
 };
@@ -62,7 +62,7 @@ const Form = () => {
       formData.append(value, values[value]);
     }
     formData.append("picturePath", `assets/${values.picture.name}`);
-    console.log(formData)
+    console.log(formData);
 
     const savedUserResponse = await fetch(
       "http://localhost:8000/auth/register",
@@ -83,8 +83,20 @@ const Form = () => {
     const loggedInResponse = await fetch("http://localhost:8000/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(values),
+      body: JSON.stringify({
+        email: "user@example.com",
+        password: "password123",
+      }),
     });
+
+    console.log("Response status:", loggedInResponse.status);
+
+// If the response status is not OK, log the response text
+if (!loggedInResponse.ok) {
+  console.log("Response text:", await loggedInResponse.text());
+}
+
+
     const loggedIn = await loggedInResponse.json();
     onSubmitProps.resetForm();
     if (loggedIn) {
@@ -152,7 +164,7 @@ const Form = () => {
                   helperText={touched.lastName && errors.lastName}
                   sx={{ gridColumn: "span 2" }}
                 />
-               
+
                 <TextField
                   label="Occupation"
                   onBlur={handleBlur}
@@ -177,7 +189,6 @@ const Form = () => {
                     onDrop={(acceptedFiles) =>
                       setFieldValue("picture", acceptedFiles[0])
                     }
-                    
                   >
                     {({ getRootProps, getInputProps }) => (
                       <Box
