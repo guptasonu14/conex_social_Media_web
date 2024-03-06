@@ -15,6 +15,9 @@ import { register } from "./controllers/auth.js";
 import { createPost } from "./controllers/posts.js";
 import { verifyToken } from "./middleware/auth.js";
 import connectDB from "./db/index.js";
+import User from "./models/User.js";
+import Post from "./models/Post.js";
+import { users, posts } from "./data/index.js";
 
 
 /* CONFIGURATIONS */
@@ -28,7 +31,7 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("dev"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-
+ 
 dotenv.config({
   path: './.env'
 })
@@ -66,6 +69,10 @@ connectDB()
 .then(() => {
     app.listen(process.env.PORT || 8000, () => {
         console.log(`⚙️ Server is running at port : ${process.env.PORT}`);
+
+         /* ADD DATA ONE TIME */
+        //  User.insertMany(users);
+        //  Post.insertMany(posts);
     })
 })
 .catch((err) => {
