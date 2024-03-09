@@ -20,6 +20,7 @@ export const users = [
     password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
     picturePath: "p11.jpeg",
     friends: [],
+
     occupation: "Software Engineer",
     viewedProfile: 14561,
     impressions: 888822,
@@ -35,6 +36,7 @@ export const users = [
     password: "$!FEAS@!O)_IDJda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
     picturePath: "p3.jpeg",
     friends: [],
+
     occupation: "Degenerate",
     viewedProfile: 12351,
     impressions: 55555,
@@ -50,6 +52,7 @@ export const users = [
     password: "da39a3ee5e6b4b0d3255bfef95601890afd80709",
     picturePath: "p4.jpeg",
     friends: [],
+
     occupation: "Data Scientist Hacker",
     viewedProfile: 45468,
     impressions: 19986,
@@ -65,6 +68,7 @@ export const users = [
     password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
     picturePath: "p6.jpeg",
     friends: [],
+
     occupation: "Educator",
     viewedProfile: 41024,
     impressions: 55316,
@@ -80,6 +84,7 @@ export const users = [
     password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
     picturePath: "p5.jpeg",
     friends: [],
+
     occupation: "Hacker",
     viewedProfile: 40212,
     impressions: 7758,
@@ -95,6 +100,7 @@ export const users = [
     password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
     picturePath: "p7.jpeg",
     friends: [],
+
     occupation: "Journalist",
     viewedProfile: 976,
     impressions: 4658,
@@ -110,6 +116,7 @@ export const users = [
     password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
     picturePath: "p8.jpeg",
     friends: [],
+
     occupation: "Nurse",
     viewedProfile: 1510,
     impressions: 77579,
@@ -125,6 +132,7 @@ export const users = [
     password: "$2b$10$dsasdgsagasda//G9JxQ4bQ8KXf4OAIe/X/AK9skyWUy",
     picturePath: "p9.jpeg",
     friends: [],
+
     occupation: "A Student",
     viewedProfile: 19420,
     impressions: 82970,
@@ -140,6 +148,7 @@ export const posts = [
     userId: userIds[1],
     firstName: "Steve",
     lastName: "Ralph",
+
     description: "Some really long random description",
     picturePath: "post1.jpeg",
     userPicturePath: "p3.jpeg",
@@ -160,6 +169,7 @@ export const posts = [
     userId: userIds[3],
     firstName: "Whatcha",
     lastName: "Doing",
+
     description:
       "Another really long random description. This one is longer than the previous one.",
     picturePath: "post2.jpeg",
@@ -182,6 +192,7 @@ export const posts = [
     userId: userIds[4],
     firstName: "Jane",
     lastName: "Doe",
+
     description:
       "This is the last really long random description. This one is longer than the previous one.",
     picturePath: "post3.jpeg",
@@ -205,6 +216,7 @@ export const posts = [
     userId: userIds[5],
     firstName: "Harvey",
     lastName: "Dunn",
+
     description:
       "This is the last really long random description. This one is longer than the previous one. Man I'm bored. I'm going to keep typing until I run out of things to say.",
     picturePath: "post4.jpeg",
@@ -228,6 +240,7 @@ export const posts = [
     userId: userIds[6],
     firstName: "Carly",
     lastName: "Vowel",
+
     description:
       "Just a short description. I'm tired of typing. I'm going to play video games now.",
     picturePath: "post5.jpeg",
@@ -251,6 +264,7 @@ export const posts = [
     userId: userIds[7],
     firstName: "Jessica",
     lastName: "Dunn",
+
     description:
       "For the last time, I'm going to play video games now. I'm tired of typing. I'm going to play video games now.",
     picturePath: "post6.jpeg",
