@@ -13,6 +13,7 @@ import {
   import { setPost } from "../../state/index"
   
   const PostWidget = ({
+    // eslint-disable-next-line react/prop-types
     postId,
     postUserId,
     name,

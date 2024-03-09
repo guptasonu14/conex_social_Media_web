@@ -4,9 +4,7 @@ import { useSelector } from "react-redux";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
-import LoginPage from "../src/scenes/loginPage/LoginPage"
-import HomePage from "./scenes/homepage/HomePage";
-import ProfilePage from "./scenes/profilepage/ProfilePage";
+
 
 
 const App = () => {
