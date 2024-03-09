@@ -44,20 +44,27 @@ const Navbar = () => {
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
       <FlexBetween gap="1.75rem">
-        <Typography
-          fontWeight="bold"
-          fontSize="clamp(1rem, 2rem, 2.25rem)"
-          color="primary"
-          onClick={() => navigate("/home")}
-          sx={{
-            "&:hover": {
-              color: primaryLight,
-              cursor: "pointer",
-            },
-          }}
-        >
-          Sociopedia
-        </Typography>
+        
+         
+  <div className="logo" style={{ zIndex: 1, margin: '5px 0', top: '0' }}>
+  <img
+    src=".\src\assets\logo.png"
+    className="img-fluid"
+    style={{ width: '90px' }}
+    alt="Logo"
+    onClick={() => navigate("/home")}
+    sx={{
+      "&:hover": {
+        color: primaryLight,
+        cursor: "pointer",
+      },
+    }}
+  />
+</div>
+
+
+        
+        
         {isNonMobileScreens && (
           <FlexBetween
             backgroundColor={neutralLight}

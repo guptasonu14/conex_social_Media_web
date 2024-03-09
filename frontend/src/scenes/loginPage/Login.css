@@ -1,0 +1,13 @@
+.logo {
+    text-align: center;
+    margin-top: 20px; /* Adjust the top margin as needed */
+  }
+  
+  .logo img {
+    width: 100%; /* Make the image responsive */
+    max-width: 180px; /* Set maximum width for larger screens */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Remove extra space beneath the image */
+    margin: 0 auto; /* Center the image within its container */
+  }
+  
