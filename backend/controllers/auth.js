@@ -1,6 +1,12 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import dotenv from "dotenv";
+
+
+dotenv.config({
+  path: './.env'
+})
 
 /* REGISTER USER */
 export const register = async (req, res) => {
@@ -9,7 +15,7 @@ export const register = async (req, res) => {
       firstName,
       lastName,
       email,
-      password,
+      password, 
       picturePath,
       friends,
       occupation,
@@ -51,6 +57,7 @@ export const register = async (req, res) => {
 
 /* LOGGING IN */
 export const login = async (req, res) => {
+
   try {
     const { email, password } = req.body;
 
@@ -78,6 +85,8 @@ export const login = async (req, res) => {
 
     // Deleting the user's password before sending the response
     delete user.password;
+
+    console.log(token)
 
     res.status(200).json({ token, user });
   } catch (err) {

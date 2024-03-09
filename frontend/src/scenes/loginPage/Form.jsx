@@ -23,7 +23,7 @@ const registerSchema = yup.object().shape({
   password: yup.string().required("required"),
 
   occupation: yup.string().required("required"),
-  picture: yup.string().required("required"),
+ picture: yup.string().required("required"),
 });
 
 const loginSchema = yup.object().shape({
@@ -57,6 +57,7 @@ const Form = () => {
 
   const register = async (values, onSubmitProps) => {
     // this allows us to send form info with image
+
     const formData = new FormData();
     for (let value in values) {
       formData.append(value, values[value]);
@@ -64,13 +65,34 @@ const Form = () => {
     formData.append("picturePath", `assets/${values.picture.name}`);
     console.log(formData);
 
+
+    //const formData = new FormData();
+    console.log(values)
+
+    // for (let value in values) {
+    //   formData.append(value, values[value]);
+    // }
+    // formData.append("picturePath", `assets/${values.picture.name}`);
+
+    // const savedUserResponse = await fetch(
+    //   "http://localhost:8000/auth/register",
+    //   {
+    //     method: "POST",
+    //     // body: formData,
+    //     body:values
+    //   }
+    // );
     const savedUserResponse = await fetch(
       "http://localhost:8000/auth/register",
       {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json" // Specify content type as JSON
+        },
+        body: JSON.stringify(values) // Serialize 'values' object to JSON string
       }
     );
+    
     const savedUser = await savedUserResponse.json();
     onSubmitProps.resetForm();
 
@@ -80,6 +102,7 @@ const Form = () => {
   };
 
   const login = async (values, onSubmitProps) => {
+    console.log(values)
     const loggedInResponse = await fetch("http://localhost:8000/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
