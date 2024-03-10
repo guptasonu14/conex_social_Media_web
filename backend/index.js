@@ -65,17 +65,32 @@ app.use("/posts", postRoutes);
 
 /* MONGOOSE SETUP */
 
-connectDB()
-.then(() => {
-    app.listen(process.env.PORT || 8000, () => {
-        console.log(`⚙️ Server is running at port : ${process.env.PORT}`);
+// connectDB()
+// .then(() => {
+//     app.listen(process.env.PORT || 8000, () => {
+//         console.log(`⚙️ Server is running at port : ${process.env.PORT}`);
 
-         /* ADD DATA ONE TIME */
-        //  User.insertMany(users);
-        //  Post.insertMany(posts);
-    })
-})
-.catch((err) => {
-    console.log("MONGO db connection failed !!! ", err);
-})
+//          /* ADD DATA ONE TIME */
+//         //  User.insertMany(users);
+//         //  Post.insertMany(posts);
+//     })
+// })
+// .catch((err) => {
+//     console.log("MONGO db connection failed !!! ", err);
+// })
+
+const PORT = process.env.PORT || 6001;
+mongoose
+  .connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+
+    /* ADD DATA ONE TIME */
+    // User.insertMany(users);
+    // Post.insertMany(posts);
+  })
+  .catch((error) => console.log(`${error} did not connect`));
 
