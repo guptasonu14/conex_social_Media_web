@@ -11,25 +11,29 @@ export default function Write() {
     e.preventDefault();
     console.log("Title:", title);
     console.log("Description:", desc);
-
-    const newPost = {
-      title,
-      desc,
-    };
-
-    console.log("New Post:", newPost);
-
-    // The following code is commented out for debugging purposes
-    /*
-    try {
-      const res = await axios.post("http://localhost:8000/blogs", newPost);
-      console.log(res);
-      window.location.replace("/post/" + res.data._id);
-    } catch (err) {
-      console.log(err);
+  
+    // Check if userData is defined and has the userId property
+    if (userData && userData.userId) {
+      const newPost = {
+        userId: userData.userId,
+        title,
+        desc,
+      };
+  
+      console.log("New Post:", newPost);
+  
+      try {
+        const res = await axios.post("http://localhost:8000/blogs", newPost);
+        console.log(res);
+        window.location.replace("/post/" + res.data._id);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      console.error("userData or userData.userId is undefined");
     }
-    */
   };
+  
 
   return (
     <div className="write">
