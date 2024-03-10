@@ -34,24 +34,22 @@ const LoginPage = () => {
     </div>
   
     <Box
-  style={{
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: isNonMobileScreens ? "50%" : "93%",
-    padding: '2rem',
-    borderRadius: '1.5rem',
-    backgroundColor: theme.palette.background.alt,
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Adjust the shadow as needed
-  }}
->
-  <Typography fontWeight="500" variant="h5" sx={{ mb: "1.5rem" }}>
-    Welcome to Conex, the Social Media for Verto's!
-  </Typography>
-  <Form />
-</Box>
-
+      style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: isNonMobileScreens ? "50%" : "93%",
+        padding: '2rem',
+        borderRadius: '1.5rem',
+        backgroundColor: theme.palette.background.alt,
+      }}
+    >
+      <Typography fontWeight="500" variant="h5" sx={{ mb: "1.5rem" }}>
+        Welcome to Conex, the Social Media for Verto's!
+      </Typography>
+      <Form />
+    </Box>
   </Box>
   
   

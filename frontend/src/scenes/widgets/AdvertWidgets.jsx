@@ -1,6 +1,10 @@
-import { Typography, useTheme } from "@mui/material";
+import { Typography, useTheme, styled } from "@mui/material";
 import FlexBetween from "../../components/FlexBetween";
 import WidgetWrapper from "../../components/WidgetWrapper";
+
+const StyledWidgetWrapper = styled(WidgetWrapper)(({ theme }) => ({
+  boxShadow: theme.palette.mode === "dark" ? "0 2px 4px rgba(255, 255, 255, 0.3)" : "0 2px 4px rgba(0, 0, 0, 0.3)",
+}));
 
 const AdvertWidget = () => {
   const { palette } = useTheme();
@@ -9,7 +13,7 @@ const AdvertWidget = () => {
   const medium = palette.neutral.medium;
 
   return (
-    <WidgetWrapper>
+    <StyledWidgetWrapper>
       <FlexBetween>
         <Typography color={dark} variant="h5" fontWeight="500">
           Sponsored
@@ -31,7 +35,7 @@ const AdvertWidget = () => {
         Your pathway to stunning and immaculate beauty and made sure your skin
         is exfoliating skin and shining like light.
       </Typography>
-    </WidgetWrapper>
+    </StyledWidgetWrapper>
   );
 };
 

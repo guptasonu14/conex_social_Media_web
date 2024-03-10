@@ -1,9 +1,20 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import Friend from "../../components/Friend"
-import WidgetWrapper from "../../components/WidgetWrapper";
+import Friend from "../../components/Friend";
+import { styled } from "@mui/system"; // Don't forget to import 'styled'
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setFriends } from "../../state/index"
+import { setFriends } from "../../state/index";
+
+// Rename styled component to avoid naming conflict
+const StyledWidgetWrapper = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: "1.5rem",
+  padding: "1.5rem",
+  borderRadius: "1rem",
+  backgroundColor: theme.palette.background.paper,
+  boxShadow: theme.palette.mode === "dark" ? "0 2px 4px rgba(255, 255, 255, 0.3)" : "0 2px 4px rgba(0, 0, 0, 0.3)",
+}));
 
 const FriendListWidget = ({ userId }) => {
   const dispatch = useDispatch();
@@ -28,7 +39,7 @@ const FriendListWidget = ({ userId }) => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <WidgetWrapper>
+    <StyledWidgetWrapper>
       <Typography
         color={palette.neutral.dark}
         variant="h5"
@@ -48,7 +59,7 @@ const FriendListWidget = ({ userId }) => {
           />
         ))}
       </Box>
-    </WidgetWrapper>
+    </StyledWidgetWrapper>
   );
 };
 

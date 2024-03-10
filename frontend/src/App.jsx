@@ -7,6 +7,7 @@ import { themeSettings } from "./theme";
 import LoginPage from "../src/scenes/loginpage/LoginPage"
 import HomePage from "../src/scenes/homepage/HomePage";
 import ProfilePage from "../src/scenes/profilepage/ProfilePage";
+import Write from "../src/scenes/blog/Write";
 
 
 const App = () => {
@@ -27,6 +28,10 @@ const App = () => {
           <Route
             path="/profile/:userId"
             element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/write"
+            element={isAuth ? <Write /> : <Navigate to="/" />}
           />
         </Routes>
       </ThemeProvider>
