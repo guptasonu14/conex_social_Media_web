@@ -167,7 +167,7 @@ const Form = () => {
                   sx={{ gridColumn: "span 4" }}
                 />
               
-
+{/* 
 <Box
   gridColumn="span 4"
   border="1px solid ${palette.neutral.medium}"
@@ -200,7 +200,45 @@ const Form = () => {
       </Box>
     )}
   </Dropzone>
+</Box> */}
+
+<Box
+  gridColumn="span 4"
+  border={`1px solid ${palette.neutral.medium}`}
+  borderRadius="5px"
+  p="1rem"
+  mt="20px" // Add margin to push the box down
+>
+  <Dropzone
+    acceptedFiles=".jpg,.jpeg,.png"
+    multiple={false}
+    onDrop={(acceptedFiles) =>
+      setFieldValue("picture", acceptedFiles[0])
+    }
+  >
+    {({ getRootProps, getInputProps }) => (
+      <Box
+        {...getRootProps()}
+        border={`2px dashed ${palette.primary.main}`}
+        p="1rem"
+        sx={{ "&:hover": { cursor: "pointer" } }}
+      >
+        <input {...getInputProps()} />
+        {/* Conditionally render the image */}
+        {values.picture ? (
+          <img
+            src={URL.createObjectURL(values.picture)}
+            alt={values.picture.name}
+            style={{ maxWidth: "100%", maxHeight: "150px" }}
+          />
+        ) : (
+          <Typography>Add Picture Here</Typography>
+        )}
+      </Box>
+    )}
+  </Dropzone>
 </Box>
+
 
 
 

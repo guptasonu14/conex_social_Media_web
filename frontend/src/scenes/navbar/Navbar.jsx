@@ -1,3 +1,5 @@
+ 
+
 import { useState } from "react";
 import {
   Box,
@@ -28,6 +30,7 @@ import FlexBetween from "../../components/FlexBetween";
 import Write from "../write/Write"
 import HomeArticle from "../homearticle/HomeArticle";
 
+
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
@@ -44,14 +47,25 @@ const Navbar = () => {
 
   const fullName = `${user.firstName} ${user.lastName}`;
 
+
+  const handleMessageIconClick = () => {
+    navigate("/Write");
+
   const handlewriteIconClick = () => {
     navigate("/Write");
   };
   const handlearticleIconClick = () => {
     navigate("/HomeArticle");
+
   };
   return (
-    <FlexBetween padding="1rem 6%" backgroundColor={alt}>
+    <FlexBetween
+      padding="1rem 6%"
+      backgroundColor={alt}
+      position="sticky"
+      top="0"
+      zIndex="1000"
+    >
       <FlexBetween gap="1.75rem">
         <div className="logo" style={{ zIndex: 1, margin: "5px 0", top: "0" }}>
           <img
@@ -94,7 +108,12 @@ const Navbar = () => {
               <LightMode sx={{ color: dark, fontSize: "25px" }} />
             )}
           </IconButton>
+
+
+          <IconButton onClick={handleMessageIconClick}>
+
           <IconButton onClick={handlearticleIconClick}>
+
             <Message sx={{ fontSize: "25px" }} />
           </IconButton>
           <IconButton onClick={handlewriteIconClick}>
@@ -212,3 +231,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
