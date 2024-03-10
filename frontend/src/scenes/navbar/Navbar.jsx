@@ -1,3 +1,5 @@
+ 
+
 import { useState } from "react";
 import {
   Box,
@@ -24,7 +26,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "../../state/index";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/FlexBetween";
-import Write from '../../scenes/blog/Write'
 
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
@@ -43,12 +44,17 @@ const Navbar = () => {
   const fullName = `${user.firstName} ${user.lastName}`;
 
   const handleMessageIconClick = () => {
-    
-    navigate("/Write"); 
+    navigate("/Write");
   };
 
   return (
-    <FlexBetween padding="1rem 6%" backgroundColor={alt}>
+    <FlexBetween
+      padding="1rem 6%"
+      backgroundColor={alt}
+      position="sticky"
+      top="0"
+      zIndex="1000"
+    >
       <FlexBetween gap="1.75rem">
         <div className="logo" style={{ zIndex: 1, margin: "5px 0", top: "0" }}>
           <img
@@ -92,7 +98,7 @@ const Navbar = () => {
             )}
           </IconButton>
 
-         <IconButton onClick={handleMessageIconClick}>
+          <IconButton onClick={handleMessageIconClick}>
             <Message sx={{ fontSize: "25px" }} />
           </IconButton>
           <Notifications sx={{ fontSize: "25px" }} />
@@ -206,3 +212,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
