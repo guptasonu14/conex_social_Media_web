@@ -51,10 +51,11 @@ const Navbar = () => {
   const handlewriteIconClick = () => {
     navigate("/Write");
   };
+  
   const handlearticleIconClick = () => {
     navigate("/HomeArticle");
-
   };
+  
   return (
     <FlexBetween
       padding="1rem 6%"
@@ -107,7 +108,7 @@ const Navbar = () => {
           </IconButton>
 
 
-          <IconButton onClick={handleMessageIconClick}> </IconButton>
+        
 
           <IconButton onClick={handlearticleIconClick}>
 
