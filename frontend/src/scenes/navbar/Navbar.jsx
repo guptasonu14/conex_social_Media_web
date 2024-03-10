@@ -16,7 +16,6 @@ import {
   DarkMode,
   LightMode,
   Notifications,
-  
   Help,
   Menu,
   Close,
@@ -24,7 +23,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "../../state/index";
 import { useNavigate } from "react-router-dom";
-import FlexBetween from "../../components/FlexBetween"
+import FlexBetween from "../../components/FlexBetween";
+import Write from '../../scenes/blog/Write'
 
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
@@ -42,30 +42,30 @@ const Navbar = () => {
 
   const fullName = `${user.firstName} ${user.lastName}`;
 
+  const handleMessageIconClick = () => {
+    
+    navigate("/Write"); 
+  };
+
   return (
     <FlexBetween padding="1rem 6%" backgroundColor={alt}>
       <FlexBetween gap="1.75rem">
-        
-         
-  <div className="logo" style={{ zIndex: 1, margin: '5px 0', top: '0' }}>
-  <img
-    src=".\src\assets\logo.png"
-    className="img-fluid"
-    style={{ width: '90px' }}
-    alt="Logo"
-    onClick={() => navigate("/home")}
-    sx={{
-      "&:hover": {
-        color: primaryLight,
-        cursor: "pointer",
-      },
-    }}
-  />
-</div>
+        <div className="logo" style={{ zIndex: 1, margin: "5px 0", top: "0" }}>
+          <img
+            src=".\src\assets\logo.png"
+            className="img-fluid"
+            style={{ width: "90px" }}
+            alt="Logo"
+            onClick={() => navigate("/home")}
+            sx={{
+              "&:hover": {
+                color: primaryLight,
+                cursor: "pointer",
+              },
+            }}
+          />
+        </div>
 
-
-        
-        
         {isNonMobileScreens && (
           <FlexBetween
             backgroundColor={neutralLight}
@@ -91,7 +91,10 @@ const Navbar = () => {
               <LightMode sx={{ color: dark, fontSize: "25px" }} />
             )}
           </IconButton>
-          <Message sx={{ fontSize: "25px" }} />
+
+         <IconButton onClick={handleMessageIconClick}>
+            <Message sx={{ fontSize: "25px" }} />
+          </IconButton>
           <Notifications sx={{ fontSize: "25px" }} />
           <Help sx={{ fontSize: "25px" }} />
           <FormControl variant="standard" value={fullName}>
