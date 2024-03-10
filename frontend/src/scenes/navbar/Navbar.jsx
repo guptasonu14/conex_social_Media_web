@@ -1,6 +1,4 @@
- 
-
-import { useState } from "react";
+ import { useState } from "react";
 import {
   Box,
   IconButton,
@@ -48,8 +46,7 @@ const Navbar = () => {
   const fullName = `${user.firstName} ${user.lastName}`;
 
 
-  const handleMessageIconClick = () => {
-    navigate("/Write");
+ 
 
   const handlewriteIconClick = () => {
     navigate("/Write");
@@ -110,7 +107,7 @@ const Navbar = () => {
           </IconButton>
 
 
-          <IconButton onClick={handleMessageIconClick}>
+          <IconButton onClick={handleMessageIconClick}> </IconButton>
 
           <IconButton onClick={handlearticleIconClick}>
 
