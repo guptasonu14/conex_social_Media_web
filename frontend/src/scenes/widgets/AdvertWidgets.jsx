@@ -4,6 +4,10 @@ import WidgetWrapper from "../../components/WidgetWrapper";
 
 const StyledWidgetWrapper = styled(WidgetWrapper)(({ theme }) => ({
   boxShadow: theme.palette.mode === "dark" ? "0 2px 4px rgba(255, 255, 255, 0.3)" : "0 2px 4px rgba(0, 0, 0, 0.3)",
+ // position: "fixed",
+ // top: "calc(43.5vh - 200px)", // Adjust as needed
+  width:"350px",
+  paddingBottom: "2rem", // Add some padding to the bottom
 }));
 
 const AdvertWidget = () => {
