@@ -22,10 +22,16 @@ import {
   Menu,
   Close,
 } from "@mui/icons-material";
+import EditIcon from "@mui/icons-material/Edit";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "../../state/index";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/FlexBetween";
+ 
+ 
+import Write from "../write/Write"
+import HomeArticle from "../homearticle/HomeArticle";
+ 
 
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
@@ -43,10 +49,15 @@ const Navbar = () => {
 
   const fullName = `${user.firstName} ${user.lastName}`;
 
-  const handleMessageIconClick = () => {
+ 
+ 
+  const handlewriteIconClick = () => {
     navigate("/Write");
   };
-
+  const handlearticleIconClick = () => {
+    navigate("/HomeArticle");
+ 
+  };
   return (
     <FlexBetween
       padding="1rem 6%"
@@ -96,13 +107,18 @@ const Navbar = () => {
             ) : (
               <LightMode sx={{ color: dark, fontSize: "25px" }} />
             )}
-          </IconButton>
-
-          <IconButton onClick={handleMessageIconClick}>
+          </IconButton> 
+ 
+          <IconButton onClick={handlearticleIconClick}>
+ 
             <Message sx={{ fontSize: "25px" }} />
           </IconButton>
+          <IconButton onClick={handlewriteIconClick}>
+            <EditIcon sx={{ fontSize: "25px" }} />
+          </IconButton>
+
           <Notifications sx={{ fontSize: "25px" }} />
-          <Help sx={{ fontSize: "25px" }} />
+
           <FormControl variant="standard" value={fullName}>
             <Select
               value={fullName}
