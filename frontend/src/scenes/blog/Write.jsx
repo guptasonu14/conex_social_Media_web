@@ -5,7 +5,9 @@ import { useSelector } from "react-redux";
 export default function Write() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
+
   const token = useSelector((state) => state.token);
+
   
 
   const { userData } = useSelector((store) => store.user);
@@ -13,6 +15,7 @@ export default function Write() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newPost = {
+
     
       title,
       desc,
@@ -40,6 +43,13 @@ export default function Write() {
    
  
  
+
+      username: userData.username,
+      title,
+      desc,
+    };
+   
+};
 
   return (
     <div className="write">

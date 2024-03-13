@@ -29,7 +29,9 @@ export default function SinglePost() {
   const handleDelete = async () => {
     try {
       await axios.delete(`http://localhost:8000/blogs/${post._id}`, {
-        data: { username: userData.username },
+
+        data: { userId: userData.userId }, 
+
       });
       window.location.replace("/");
     } catch (err) {
@@ -40,7 +42,9 @@ export default function SinglePost() {
   const handleUpdate = async () => {
     try {
       await axios.put(`http://localhost:8000/blogs/${post._id}`, {
-        username: userData.username,
+
+        userId: userData.userId, 
+
         title,
         desc,
       });
@@ -55,7 +59,9 @@ export default function SinglePost() {
       <div className="singlePostWrapper">
         <h1 className="singlePostTitle">
           {title}
-          {post.username === userData?.username && (
+
+          {post.userId === userData?.userId && (
+
             <div className="singlePostEdit">
               <i
                 className="singlePostIcon fa-regular fa-pen-to-square"
@@ -71,8 +77,11 @@ export default function SinglePost() {
         <div className="singlePostInfo">
           <span className="singlePostAuthor">
             Author:
-            <Link to={`/?user=${post.username}`} className="link">
-              <b>{post.username}</b>
+
+
+            <Link to={`/?user=${post.userId}`} className="link">
+              <b>{post.userId}</b>
+
             </Link>
           </span>
           <span className="singlePostDate">
