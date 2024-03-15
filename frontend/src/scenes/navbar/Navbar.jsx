@@ -27,6 +27,7 @@ import { useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/FlexBetween";
 import Write from "../write/Write"
 import HomeArticle from "../homearticle/HomeArticle";
+ 
 
 
 const Navbar = () => {
@@ -47,15 +48,15 @@ const Navbar = () => {
 
 
  
-
+ 
   const handlewriteIconClick = () => {
     navigate("/Write");
   };
-  
   const handlearticleIconClick = () => {
     navigate("/HomeArticle");
+ 
   };
-  
+
   return (
     <FlexBetween
       padding="1rem 6%"
@@ -105,11 +106,8 @@ const Navbar = () => {
             ) : (
               <LightMode sx={{ color: dark, fontSize: "25px" }} />
             )}
-          </IconButton>
-
-
-        
-
+          </IconButton> 
+ 
           <IconButton onClick={handlearticleIconClick}>
 
             <Message sx={{ fontSize: "25px" }} />

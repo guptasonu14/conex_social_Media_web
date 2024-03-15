@@ -1,7 +1,20 @@
 import Blog from "../models/Blog.js";
 import User from "../models/User.js";
 
+import express from "express";
+ 
+const app = express();
+
+// Middleware to parse JSON bodies
+app.use(express.json());
+
+// Your route handlers and other middleware...
+
+
+
+
 export const createPost = async (req, res) => {
+
   try {
     const { title, desc, userId } = req.body;
     const user = await User.findById(userId);
