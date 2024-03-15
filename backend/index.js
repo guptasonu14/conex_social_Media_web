@@ -37,9 +37,10 @@ dotenv.config({
 })
 
 app.use(cors({
-  origin: process.env.CORS_ORIGIN,
+  origin: process.env.CORS_ORIGIN || "*",
   credentials: true
 }))
+console.log(process.env.CORS_ORIGIN)
 
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 

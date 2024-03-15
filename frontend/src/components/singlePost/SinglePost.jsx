@@ -44,11 +44,10 @@ export default function SinglePost() {
       await axios.put(`http://localhost:8000/blogs/${post._id}`, {
 
         userId: userData.userId, 
-
         title,
         desc,
       });
-      setUpdateMode(false);
+      setUpdateMode(false)
     } catch (err) {
       console.error("Error updating post:", err);
     }

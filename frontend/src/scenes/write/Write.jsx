@@ -1,61 +1,38 @@
 import { useState } from "react";
-import "./Write.css";
-import axios from "axios";
 import { useSelector } from "react-redux";
 
 export default function Write() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
 
+  const token = useSelector((state) => state.token);
+  const { userData } = useSelector((store) => store.user);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Title:", title);
-    console.log("Description:", desc);
-
-
     const newPost = {
+      username: userData.username,
       title,
       desc,
     };
 
-    console.log("New Post:", newPost);
-
-    // The following code is commented out for debugging purposes
-    /*
     try {
-      const res = await axios.post("http://localhost:8000/blogs", newPost);
-      console.log(res);
-      window.location.replace("/post/" + res.data._id);
-    } catch (err) {
-      console.log(err);
-    }
-    */
-  };
+      const response = await fetch("http://localhost:8000/blogs", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, // Added Content-Type header
+        body: JSON.stringify(newPost),
+      });
 
-  
-    // Check if userData is defined and has the userId property
-    if (userData && userData.userId) {
-      const newPost = {
-        userId: userData.userId,
-        title,
-        desc,
-      };
-  
-      console.log("New Post:", newPost);
-  
-      try {
-        const res = await axios.post("http://localhost:8000/blogs", newPost);
-        console.log(res);
-        window.location.replace("/post/" + res.data._id);
-      } catch (err) {
-        console.log(err);
+      if (!response.ok) {
+        throw new Error("Failed to create post");
       }
-    } else {
-      console.error("userData or userData.userId is undefined");
+
+      console.log("Post created successfully!");
+      // You can navigate to another page or update the UI as needed
+    } catch (error) {
+      console.error("Error creating post:", error.message);
     }
   };
-  
-
 
   return (
     <div className="write">
@@ -66,6 +43,7 @@ export default function Write() {
             placeholder="Title"
             className="writeInput"
             autoFocus={true}
+            value={title} // Added value attribute
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
@@ -74,11 +52,12 @@ export default function Write() {
             placeholder="Tell your story"
             type="text"
             className="writeInput writeText"
+            value={desc} // Added value attribute
             onChange={(e) => setDesc(e.target.value)}
           ></textarea>
         </div>
         <button className="writeSubmit" type="submit">
-          publish
+          Publish
         </button>
       </form>
     </div>

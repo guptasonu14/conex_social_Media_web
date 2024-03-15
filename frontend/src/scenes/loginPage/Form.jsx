@@ -36,8 +36,7 @@ const initialValuesRegister = {
   lastName: "",
   email: "",
   password: "",
-  
-  occupation: "",
+    occupation: "",
   picture: "",
 };
 
@@ -105,6 +104,8 @@ const Form = () => {
   };
 
   return (
+  
+    
     <Formik
       onSubmit={handleFormSubmit}
       initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
@@ -120,17 +121,27 @@ const Form = () => {
         setFieldValue,
         resetForm,
       }) => (
+       
+        
+      
         <form onSubmit={handleSubmit}>
           <Box
             display="grid"
             gap="30px"
+            
+          
             gridTemplateColumns="repeat(4, minmax(0, 1fr))"
             sx={{
               "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+              
+              
             }}
           >
+            
             {isRegister && (
               <>
+               
+        
                 <TextField
                   label="First Name"
                   onBlur={handleBlur}
@@ -206,6 +217,7 @@ const Form = () => {
   gridColumn="span 4"
   border={`1px solid ${palette.neutral.medium}`}
   borderRadius="5px"
+ 
   p="1rem"
   mt="20px" // Add margin to push the box down
 >
@@ -303,8 +315,10 @@ const Form = () => {
             </Typography>
           </Box>
         </form>
+       
       )}
     </Formik>
+   
   );
 };
 

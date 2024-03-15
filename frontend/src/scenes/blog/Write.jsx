@@ -7,6 +7,7 @@ export default function Write() {
   const [desc, setDesc] = useState("");
 
   const token = useSelector((state) => state.token);
+  console.log(token)
 
   
 
@@ -27,6 +28,7 @@ export default function Write() {
         headers: { Authorization: `Bearer ${token}` },
         body: JSON.stringify(newPost),
       });
+      console.log(response)
       
       
 
@@ -44,12 +46,8 @@ export default function Write() {
  
  
 
-      username: userData.username,
-      title,
-      desc,
-    };
-   
-};
+      
+
 
   return (
     <div className="write">
