@@ -14,22 +14,24 @@ app.use(express.json());
 
 
 export const createPost = async (req, res) => {
-
   try {
-    const { title, desc, userId } = req.body;
+    const { title, desc } = req.body;
+    const userId = req.user.id; // Corrected to use req.user.id
+    console.log(req.body);
+    console.log(userId);
     const user = await User.findById(userId);
     const newPost = new Blog({
-        title,
-        desc,
-        userId,
-
-        });
+      title,
+      desc,
+      userId,
+    });
     const savedPost = await newPost.save();
     res.status(200).json(savedPost);
   } catch (err) {
     res.status(500).json(err);
   }
 };
+
 
 export const updatePost = async (req, res) => {
   try {

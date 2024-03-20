@@ -1,4 +1,5 @@
 import express from "express";
+
 import {
   createPost,
   updatePost,
@@ -9,6 +10,8 @@ import {
 import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
+
+
 router.use(verifyToken);
 
 // CREATE POST

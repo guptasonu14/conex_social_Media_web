@@ -11,15 +11,14 @@ export default function Write() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newPost = {
-      username: userData.username,
       title,
       desc,
     };
-
+   console.log(newPost);
     try {
       const response = await fetch("http://localhost:8000/blogs", {
         method: "POST",
-        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, // Added Content-Type header
+        headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, 
         body: JSON.stringify(newPost),
       });
 

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../../state/index";
 import PostWidget from "../widgets/PostWidget";
@@ -35,12 +35,11 @@ const PostsWidget = ({ userId, isProfile = false }) => {
     } else {
       getPosts();
     }
-    console.log(posts)
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isProfile, userId, token, dispatch]);
 
   return (
     <>
-       {posts.map(
+       {Array.isArray(posts) && posts.map(
         ({
           _id,
           userId,
@@ -64,7 +63,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
             comments={comments}
           />
         )
-      )} 
+      )}
     </>
   );
 };

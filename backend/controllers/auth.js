@@ -2,46 +2,68 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import dotenv from "dotenv";
-
+import uploadOnCloudinary from "../utils/cloudinary.js";
+import upload from "../middleware/multer.middleware.js";
+import getDataUri from "../utils/dataUri.js";
 
 dotenv.config({
   path: './.env'
-})
+});
 
 /* REGISTER USER */
 export const register = async (req, res) => {
-    console.log(req);
   try {
     const {
       firstName,
       lastName,
       email,
       password,
-      picturePath,
       friends,
       occupation,
     } = req.body;
 
+    // Hash password
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
+
+    const file = req.file; // Check if req.file is properly populated
+    console.log(file);
+
+    if (!file) {
+      throw new Error("No file uploaded");
+    }
+
+    const fileUri = getDataUri(file);
+
+    if (!fileUri) {
+      throw new Error("Failed to convert file to Data URI");
+    }
+
+    const mycloud = await uploadOnCloudinary.v2.uploader.upload(fileUri.content);
 
     const newUser = new User({
       firstName,
       lastName,
       email,
       password: passwordHash,
-      picturePath,
+      picturePath: {
+        public_id: mycloud.public_id, 
+        url: mycloud.secure_url,
+      },
       friends,
       occupation,
       viewedProfile: Math.floor(Math.random() * 10000),
       impressions: Math.floor(Math.random() * 10000),
     });
+
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
+
 
 /* LOGGING IN */
 export const login = async (req, res) => {
