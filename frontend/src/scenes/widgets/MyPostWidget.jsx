@@ -42,8 +42,8 @@ import {
       formData.append("userId", _id);
       formData.append("description", post);
       if (image) {
-        formData.append("picturePath", image.name);
-        formData.append("picturePath", image.name);
+        formData.append("picturePath", image);
+       
       }
   
       const response = await fetch(`http://localhost:8000/posts`, {

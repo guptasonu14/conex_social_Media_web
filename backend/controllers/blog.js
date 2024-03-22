@@ -1,29 +1,13 @@
 import Blog from "../models/Blog.js";
 import User from "../models/User.js";
 
-import express from "express";
- 
-const app = express();
-
-// Middleware to parse JSON bodies
-app.use(express.json());
-
-
-
-
-
-
-export const createPost = async (req, res) => {
+export const createBlog = async (req, res) => {
   try {
-    const { title, desc,userId } = req.body;
-   
-    console.log(req.body);
-    console.log(userId);
-    const user = await User.findById(userId);
+    const { title, desc, userId } = req.body;
     const newPost = new Blog({
+      userId,
       title,
       desc,
-      userId,
     });
     const savedPost = await newPost.save();
     res.status(200).json(savedPost);
@@ -32,63 +16,49 @@ export const createPost = async (req, res) => {
   }
 };
 
-
-export const updatePost = async (req, res) => {
+export const getPostsByUserId = async (req, res) => {
   try {
-    const post = await Blog.findById(req.params.id);
-    const userId = "user_id_placeholder"; // Change this to get the user ID from authentication
-    if (post.userId === userId) {
-      try {
-        const updatedPost = await Blog.findByIdAndUpdate(
-          req.params.id,
-          {
-            $set: req.body,
-          },
-          { new: true }
-        );
-        res.status(200).json(updatedPost);
-      } catch (err) {
-        res.status(500).json(err);
-      }
-    } else {
-      res.status(401).json("You can update only your post!");
-    }
+    const { userId } = req.params;
+    const posts = await Blog.find({ userId }).sort({ createdAt: -1 });
+    res.status(200).json(posts);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
 export const deletePost = async (req, res) => {
   try {
-    const post = await Blog.findById(req.params.id);
-    const userId = "user_id_placeholder"; // Change this to get the user ID from authentication
-    if (post.userId === userId) {
-      try {
-        await Blog.findByIdAndDelete(req.params.id);
-        res.status(200).json("Post has been deleted...");
-      } catch (err) {
-        res.status(500).json(err);
-      }
-    } else {
-      res.status(401).json("You can delete only your post!");
+    const { id } = req.params;
+    const post = await Blog.findById(id);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
     }
+    if (post.userId !== req.userId) {
+      return res.status(401).json({ message: "You can delete only your post!" });
+    }
+    await Blog.findByIdAndDelete(id);
+    res.status(200).json({ message: "Post has been deleted" });
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
 export const getPostById = async (req, res) => {
   try {
-    const post = await Blog.findById(req.params.id);
+    const { id } = req.params;
+    const post = await Blog.findById(id);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
     res.status(200).json(post);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
 export const getAllPosts = async (req, res) => {
-  const userId = req.query.user;
   try {
+    const userId = req.query.user;
     let posts;
     if (userId) {
       posts = await Blog.find({ userId });
@@ -97,6 +67,6 @@ export const getAllPosts = async (req, res) => {
     }
     res.status(200).json(posts);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };

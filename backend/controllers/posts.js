@@ -1,44 +1,27 @@
 import Post from "../models/Post.js";
 import User from "../models/User.js";
 import uploadOnCloudinary from "../utils/cloudinary.js";
-import getDataUri from "../utils/dataUri.js";
-
 
 /* CREATE */
 export const createPost = async (req, res) => {
   try {
-    console.log("Inside createPost controller"); // Debug statement
+    console.log("Inside createPost controller");
     const { userId, description } = req.body;
-    console.log("User ID:", userId); // Debug statement
-    console.log("Description:", description); // Debug statement
+    console.log("User ID:", userId);
+    console.log("Description:", description);
     const user = await User.findById(userId);
-    console.log("User:", user); // Debug statement
-    const file = req.file; // Check if req.file is properly populated
-    console.log("File:", file); // Debug statement
+    console.log("User:", user);
+    const file = req.file;
+    console.log("File:", file); 
 
-    if (!file) {
-      throw new Error("No file uploaded");
-    }
-
-    const fileUri = getDataUri(file);
-    console.log("File URI:", fileUri); // Debug statement
-
-    if (!fileUri) {
-      throw new Error("Failed to convert file to Data URI");
-    }
-
-    const mycloud = await uploadOnCloudinary.v2.uploader.upload(fileUri.content);
-    console.log("Uploaded to Cloudinary:", mycloud); // Debug statement
+    const picturePath = req.file ? await uploadOnCloudinary(req.file.path) : null;
 
     const newPost = new Post({
       userId,
       firstName: user.firstName,
       lastName: user.lastName,
       description,
-      picturePath: {
-        public_id: mycloud.public_id, 
-        url: mycloud.secure_url,
-      },
+      picturePath: picturePath ? picturePath.url : null,
       likes: {},
       comments: [],
     });
@@ -51,9 +34,6 @@ export const createPost = async (req, res) => {
     res.status(500).json({ message: err.message || "Internal server error" });
   }
 };
-
-
-
 
 /* READ */
 export const getFeedPosts = async (req, res) => {

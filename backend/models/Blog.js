@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const BlogSchema = new mongoose.Schema(
   {
+    userId:{
+     type:String,
+     required:true,
+    },
     title: {
       type: String,
       required: true,
@@ -12,10 +16,7 @@ const BlogSchema = new mongoose.Schema(
       required: true,
     },
 
-    userId: {
-      type: String,
-      required: true,
-    },
+   
   },
   { timestamps: true }
 );

@@ -3,8 +3,8 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import dotenv from "dotenv";
 import uploadOnCloudinary from "../utils/cloudinary.js";
-import upload from "../middleware/multer.middleware.js";
-import getDataUri from "../utils/dataUri.js";
+
+
 
 dotenv.config({
   path: './.env'
@@ -26,30 +26,19 @@ export const register = async (req, res) => {
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
 
-    const file = req.file; // Check if req.file is properly populated
-    console.log(file);
+    const picture = req.files?.picturePath[0]?.path;
 
-    if (!file) {
-      throw new Error("No file uploaded");
-    }
+    
 
-    const fileUri = getDataUri(file);
 
-    if (!fileUri) {
-      throw new Error("Failed to convert file to Data URI");
-    }
-
-    const mycloud = await uploadOnCloudinary.v2.uploader.upload(fileUri.content);
+    const picturePath = await uploadOnCloudinary(picture);
 
     const newUser = new User({
       firstName,
       lastName,
       email,
       password: passwordHash,
-      picturePath: {
-        public_id: mycloud.public_id, 
-        url: mycloud.secure_url,
-      },
+      picturePath: picturePath.url,
       friends,
       occupation,
       viewedProfile: Math.floor(Math.random() * 10000),

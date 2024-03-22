@@ -1,8 +1,7 @@
 import express from "express";
-
 import {
-  createPost,
-  updatePost,
+  createBlog,
+  getPostsByUserId,
   deletePost,
   getPostById,
   getAllPosts,
@@ -11,19 +10,18 @@ import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
-
 router.use(verifyToken);
 
 // CREATE POST
-router.post("/", createPost);
+router.post("/", createBlog);
 
-// UPDATE POST
-router.put("/:id", updatePost);
+// GET POSTS BY USER ID
+router.get("/user/:userId/posts", getPostsByUserId);
 
 // DELETE POST
 router.delete("/:id", deletePost);
 
-// GET POST
+// GET POST BY ID
 router.get("/:id", getPostById);
 
 // GET ALL POSTS
