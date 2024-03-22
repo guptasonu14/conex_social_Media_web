@@ -8,15 +8,15 @@ const app = express();
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-// Your route handlers and other middleware...
+
 
 
 
 
 export const createPost = async (req, res) => {
   try {
-    const { title, desc } = req.body;
-    const userId = req.user.id; // Corrected to use req.user.id
+    const { title, desc,userId } = req.body;
+   
     console.log(req.body);
     console.log(userId);
     const user = await User.findById(userId);
