@@ -1,77 +1,67 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./Write.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setPosts } from "../../state/index";
+import axios from 'axios';
 
 export default function Write() {
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-
+  const { _id } = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
-  console.log(token)
 
-  
-
-  const { userData } = useSelector((store) => store.user);
+  const instance = axios.create({
+    withCredentials: true,
+    baseURL: 'http://localhost:8000'
+  })
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newPost = {
 
-    
-      title,
-      desc,
-    };
-   console.log(newPost)
     try {
-      const response = await fetch("http://localhost:8000/blogs", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: JSON.stringify(newPost),
+      const response = await instance.post('/blogs', {
+        title: title,
+        desc: desc,
+        userId: _id
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
-      console.log(response)
-      
-      
 
-      if (!response.ok) {
-        throw new Error("Failed to create post");
-      }
-
-      console.log("Post created successfully!");
-      // You can navigate to another page or update the UI as needed
+      const newPost = response.data;
+      dispatch(setPosts(newPost));
+      setTitle("");
+      setDesc("");
     } catch (error) {
-      console.error("Error creating post:", error.message);
+      console.error("Error occurred while submitting:", error.response?.data ?? error.message);
     }
   };
-   
- 
- 
-
-      
-
 
   return (
     <div className="write">
-     <form className="writeForm" onSubmit={handleSubmit}>
+      <form className="writeForm" onSubmit={handleSubmit}>
         <div className="writeFormGroup">
-          
           <input
             type="text"
             placeholder="Title"
             className="writeInput"
             autoFocus={true}
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
         <div className="writeFormGroup">
           <textarea
             placeholder="Tell your story"
-            type="text"
             className="writeInput writeText"
+            value={desc}
             onChange={(e) => setDesc(e.target.value)}
           ></textarea>
         </div>
         <button className="writeSubmit" type="submit">
-          publish
+          Publish
         </button>
       </form>
     </div>

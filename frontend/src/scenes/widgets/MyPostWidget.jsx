@@ -42,10 +42,9 @@ import {
       formData.append("userId", _id);
       formData.append("description", post);
       if (image) {
-        formData.append("picturePath", image);
-       
+        formData.append("picturePath", image); 
       }
-  
+    
       const response = await fetch(`http://localhost:8000/posts`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
@@ -56,6 +55,7 @@ import {
       setImage(null);
       setPost("");
     };
+    
   
     return (
       <WidgetWrapper>

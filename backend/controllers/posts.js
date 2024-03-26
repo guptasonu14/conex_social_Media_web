@@ -5,7 +5,7 @@ import uploadOnCloudinary from "../utils/cloudinary.js";
 /* CREATE */
 export const createPost = async (req, res) => {
   try {
-    console.log("Inside createPost controller");
+    
     const { userId, description } = req.body;
     console.log("User ID:", userId);
     console.log("Description:", description);

@@ -2,11 +2,11 @@ import React from 'react'
 import "./Blog.css"
 import { Link } from 'react-router-dom'
 
-const Blog = () => {
+const Blog = ({post}) => {
   return (
     <div className="post">
      <div className="postInfo">
-      <Link to={`/post/${post._id}`} className="link">
+      <Link to={`/blogs/${post._id}`} className="link">
         <span className="postTitle">{post.title}</span>
       </Link>
       <hr />

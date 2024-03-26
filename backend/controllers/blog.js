@@ -1,72 +1,59 @@
 import Blog from "../models/Blog.js";
 import User from "../models/User.js";
 
+// CREATE BLOG
 export const createBlog = async (req, res) => {
+ 
   try {
     const { title, desc, userId } = req.body;
-    const newPost = new Blog({
-      userId,
-      title,
-      desc,
-    });
-    const savedPost = await newPost.save();
-    res.status(200).json(savedPost);
+    const newBlog = new Blog({ userId, title, desc });
+    const savedBlog = await newBlog.save();
+    res.status(200).json(savedBlog);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ error: err.message });
   }
 };
 
-export const getPostsByUserId = async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const posts = await Blog.find({ userId }).sort({ createdAt: -1 });
-    res.status(200).json(posts);
-  } catch (err) {
-    res.status(500).json({ message: "Internal server error" });
-  }
-};
-
-export const deletePost = async (req, res) => {
+// UPDATE BLOG
+export const updateBlog = async (req, res) => {
   try {
     const { id } = req.params;
-    const post = await Blog.findById(id);
-    if (!post) {
-      return res.status(404).json({ message: "Post not found" });
-    }
-    if (post.userId !== req.userId) {
-      return res.status(401).json({ message: "You can delete only your post!" });
-    }
+    const { title, desc } = req.body;
+    const updatedBlog = await Blog.findByIdAndUpdate(id, { title, desc }, { new: true });
+    res.status(200).json(updatedBlog);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// DELETE BLOG
+export const deleteBlog = async (req, res) => {
+  try {
+    const { id } = req.params;
     await Blog.findByIdAndDelete(id);
-    res.status(200).json({ message: "Post has been deleted" });
+    res.status(200).json({ message: "Blog deleted successfully" });
   } catch (err) {
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ error: err.message });
   }
 };
 
-export const getPostById = async (req, res) => {
+// GET BLOG BY ID
+export const getBlogById = async (req, res) => {
   try {
     const { id } = req.params;
-    const post = await Blog.findById(id);
-    if (!post) {
-      return res.status(404).json({ message: "Post not found" });
-    }
-    res.status(200).json(post);
+    const blog = await Blog.findById(id);
+    res.status(200).json(blog);
   } catch (err) {
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ error: err.message });
   }
 };
 
-export const getAllPosts = async (req, res) => {
+// GET ALL BLOGS
+export const getAllBlogs = async (req, res) => {
   try {
-    const userId = req.query.user;
-    let posts;
-    if (userId) {
-      posts = await Blog.find({ userId });
-    } else {
-      posts = await Blog.find();
-    }
-    res.status(200).json(posts);
+    const blogs = await Blog.find();
+    res.status(200).json(blogs);
   } catch (err) {
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ error: err.message });
   }
 };

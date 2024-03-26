@@ -1,30 +1,31 @@
 import express from "express";
 import {
   createBlog,
-  getPostsByUserId,
-  deletePost,
-  getPostById,
-  getAllPosts,
+  updateBlog,
+  deleteBlog,
+  getBlogById,
+  getAllBlogs,
 } from "../controllers/blog.js";
+
 import { verifyToken } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.use(verifyToken);
+// router.use(verifyToken);
 
-// CREATE POST
-router.post("/", createBlog);
+// CREATE BLOG
+router.post("/", verifyToken,createBlog);
 
-// GET POSTS BY USER ID
-router.get("/user/:userId/posts", getPostsByUserId);
+// UPDATE BLOG
+router.put("/:id", updateBlog);
 
-// DELETE POST
-router.delete("/:id", deletePost);
+// DELETE BLOG
+router.delete("/:id", deleteBlog);
 
-// GET POST BY ID
-router.get("/:id", getPostById);
+// GET BLOG BY ID
+router.get("/:id", getBlogById);
 
-// GET ALL POSTS
-router.get("/", getAllPosts);
+// GET ALL BLOGS
+router.get("/", getAllBlogs);
 
 export default router;

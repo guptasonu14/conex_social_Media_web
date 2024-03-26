@@ -4,17 +4,23 @@ import cors from "cors";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
+
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
 import blogRoutes from "./routes/blogs.js";
+
 import { register } from "./controllers/auth.js";
 import { createPost } from "./controllers/posts.js";
 import { createBlog } from "./controllers/blog.js";
 import { verifyToken } from "./middleware/auth.js";
+
 import connectDB from "./db/index.js";
+
 import User from "./models/User.js";
 import Post from "./models/Post.js";
+import Blog from "./models/Blog.js"
+
 import { upload } from "./middleware/multer.middleware.js"; 
 
 dotenv.config({ path: './.env' });
@@ -31,8 +37,12 @@ app.use(cors({
    credentials: true 
 }));
 
-app.use(bodyParser.json({ limit: "30mb", extended: true }));
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+// Parse JSON bodies
+app.use(express.json());
+
+// Parse URL-encoded bodies
+app.use(express.urlencoded({ extended: true }));
+
 app.use(express.static("public"));
 
 app.use((err, req, res, next) => {

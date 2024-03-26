@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './Form.css'
 import {
   Box,
   Button,
@@ -12,16 +13,16 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setLogin } from "../../state/index"
+import { setLogin } from "../../state/index";
 import Dropzone from "react-dropzone";
-import FlexBetween from "../../components/FlexBetween"
+import FlexBetween from "../../components/FlexBetween";
 
 const registerSchema = yup.object().shape({
   firstName: yup.string().required("required"),
   lastName: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
- 
+
   occupation: yup.string().required("required"),
   picture: yup.string().required("required"),
 });
@@ -36,7 +37,7 @@ const initialValuesRegister = {
   lastName: "",
   email: "",
   password: "",
-    occupation: "",
+  occupation: "",
   picture: "",
 };
 
@@ -62,7 +63,7 @@ const Form = () => {
     }
     formData.append("picturePath", `assets/${values.picture.name}`);
 
-    console.log(formData)
+    console.log(formData);
 
     const savedUserResponse = await fetch(
       "http://localhost:8000/auth/register",
@@ -104,8 +105,7 @@ const Form = () => {
   };
 
   return (
-  
-    
+    <div className="form-container"> 
     <Formik
       onSubmit={handleFormSubmit}
       initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
@@ -121,27 +121,17 @@ const Form = () => {
         setFieldValue,
         resetForm,
       }) => (
-       
-        
-      
         <form onSubmit={handleSubmit}>
           <Box
             display="grid"
             gap="30px"
-            
-          
             gridTemplateColumns="repeat(4, minmax(0, 1fr))"
             sx={{
               "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
-              
-              
             }}
           >
-            
             {isRegister && (
               <>
-               
-        
                 <TextField
                   label="First Name"
                   onBlur={handleBlur}
@@ -164,7 +154,7 @@ const Form = () => {
                   helperText={touched.lastName && errors.lastName}
                   sx={{ gridColumn: "span 2" }}
                 />
-               
+
                 <TextField
                   label="Occupation"
                   onBlur={handleBlur}
@@ -177,83 +167,43 @@ const Form = () => {
                   helperText={touched.occupation && errors.occupation}
                   sx={{ gridColumn: "span 4" }}
                 />
-              
-{/* 
-<Box
-  gridColumn="span 4"
-  border="1px solid ${palette.neutral.medium}"
-  borderRadius="5px"
-  p="1rem"
->
-  <Dropzone
-    acceptedFiles=".jpg,.jpeg,.png"
-    multiple={false}
-    onDrop={(acceptedFiles) =>
-      setFieldValue("picture", acceptedFiles[0])
-    }
-  >
-    {({ getRootProps, getInputProps }) => (
-      <Box
-        {...getRootProps()}
-        border={`2px dashed ${palette.primary.main}`}
-        p="1rem"
-        sx={{ "&:hover": { cursor: "pointer" } }}
-      >
-        <input {...getInputProps()} />
-        {!values.picture ? (
-          <p>Add Picture Here</p>
-        ) : (
-          <FlexBetween>
-            <Typography>{values.picture.name}</Typography>
-            <EditOutlinedIcon />
-          </FlexBetween>
-        )}
-      </Box>
-    )}
-  </Dropzone>
-</Box> */}
 
-<Box
-  gridColumn="span 4"
-  border={`1px solid ${palette.neutral.medium}`}
-  borderRadius="5px"
- 
-  p="1rem"
-  mt="20px" // Add margin to push the box down
->
-  <Dropzone
-    acceptedFiles=".jpg,.jpeg,.png"
-    multiple={false}
-    onDrop={(acceptedFiles) =>
-      setFieldValue("picture", acceptedFiles[0])
-    }
-  >
-    {({ getRootProps, getInputProps }) => (
-      <Box
-        {...getRootProps()}
-        border={`2px dashed ${palette.primary.main}`}
-        p="1rem"
-        sx={{ "&:hover": { cursor: "pointer" } }}
-      >
-        <input {...getInputProps()} />
-        {/* Conditionally render the image */}
-        {values.picture ? (
-          <img
-            src={URL.createObjectURL(values.picture)}
-            alt={values.picture.name}
-            style={{ maxWidth: "100%", maxHeight: "150px" }}
-          />
-        ) : (
-          <Typography>Add Picture Here</Typography>
-        )}
-      </Box>
-    )}
-  </Dropzone>
-</Box>
-
-
-
-
+                <Box
+                  gridColumn="span 4"
+                  border={`1px solid ${palette.neutral.medium}`}
+                  borderRadius="5px"
+                  p="1rem"
+                  mt="20px" // Add margin to push the box down
+                >
+                  <Dropzone
+                    acceptedFiles=".jpg,.jpeg,.png"
+                    multiple={false}
+                    onDrop={(acceptedFiles) =>
+                      setFieldValue("picture", acceptedFiles[0])
+                    }
+                  >
+                    {({ getRootProps, getInputProps }) => (
+                      <Box
+                        {...getRootProps()}
+                        border={`2px dashed ${palette.primary.main}`}
+                        p="1rem"
+                        sx={{ "&:hover": { cursor: "pointer" } }}
+                      >
+                        <input {...getInputProps()} />
+                        {/* Conditionally render the image */}
+                        {values.picture ? (
+                          <img
+                            src={URL.createObjectURL(values.picture)}
+                            alt={values.picture.name}
+                            style={{ maxWidth: "100%", maxHeight: "150px" }}
+                          />
+                        ) : (
+                          <Typography>Add Picture Here</Typography>
+                        )}
+                      </Box>
+                    )}
+                  </Dropzone>
+                </Box>
               </>
             )}
 
@@ -315,10 +265,9 @@ const Form = () => {
             </Typography>
           </Box>
         </form>
-       
       )}
     </Formik>
-   
+    </div>
   );
 };
 

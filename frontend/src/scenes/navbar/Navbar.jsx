@@ -25,7 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "../../state/index";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/FlexBetween";
-import Write from "../write/Write"
+import Write from "../blog/Write"
 import HomeArticle from "../homearticle/HomeArticle";
  
 
