@@ -1,5 +1,6 @@
 .write{
     padding-top: 50px;
+    margin-top: 30px;
 }
 
 .writeImg{
@@ -61,3 +62,12 @@ position: relative;
     cursor: pointer;
     font-size: 16px;
 }
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Adjust z-index as needed */
+  }
+  
+  

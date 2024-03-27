@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 const Blog = ({post}) => {
   return (
-    <div className="post-container"> {/* Added CSS class "post-container" */}
+    <div className="post-container"> 
       <div className="post">
         <div className="postInfo">
           <Link to={`/blogs/${post._id}`} className="link">

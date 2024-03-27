@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import "./HomeArticle.css";
-import Sidebar from '../../components/sidebar/SideBar';
 import axios from "axios";
 import { useLocation } from "react-router";
 import Blogs from '../../components/blogs/Blogs';

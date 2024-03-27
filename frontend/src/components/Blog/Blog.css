@@ -1,6 +1,7 @@
 .post{
-    width: 385px;
+    width: 15rem;
     margin: 0px 25px 40px 25px;
+    height: 18rem;
     
 }
 .postInfo{
@@ -24,7 +25,7 @@
     font-style: italic;
     font-size: 13px;
     color: #999;
-    margin-top: 15px;
+    margin-top: 0.5rem;
 }
 
 .postDesc{

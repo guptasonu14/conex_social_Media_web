@@ -3,6 +3,7 @@ import "./Write.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../../state/index";
 import axios from 'axios';
+import Navbar from "../navbar/Navbar";
 
 
 export default function Write() {
@@ -43,30 +44,33 @@ export default function Write() {
   };
 
   return (
-    <div className="write">
-      <form className="writeForm" onSubmit={handleSubmit}>
-        <div className="writeFormGroup">
-          <input
-            type="text"
-            placeholder="Title"
-            className="writeInput"
-            autoFocus={true}
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-        <div className="writeFormGroup">
-          <textarea
-            placeholder="Tell your story"
-            className="writeInput writeText"
-            value={desc}
-            onChange={(e) => setDesc(e.target.value)}
-          ></textarea>
-        </div>
-        <button className="writeSubmit" type="submit">
-          Publish
-        </button>
-      </form>
+    <div>
+      <Navbar />
+      <div className="write">
+        <form className="writeForm" onSubmit={handleSubmit}>
+          <div className="writeFormGroup">
+            <input
+              type="text"
+              placeholder="Title"
+              className="writeInput"
+              autoFocus={true}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          <div className="writeFormGroup">
+            <textarea
+              placeholder="Tell your story"
+              className="writeInput writeText"
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
+            ></textarea>
+          </div>
+          <button className="writeSubmit" type="submit">
+            Publish
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
