@@ -26,14 +26,13 @@ const HomeArticle = () => {
     
 
     return (
-        <>
+        <div className="home-article-container">
         <Navbar />
-        <div className="home">
-            
+        <div className="home-article-content">
             <Blogs blogs={blogs} />
-            <Sidebar />
+           
         </div>
-        </>
+    </div>  
     );
 };
 

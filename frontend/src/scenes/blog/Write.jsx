@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../../state/index";
 import axios from 'axios';
 
+
 export default function Write() {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
@@ -34,6 +35,8 @@ export default function Write() {
       dispatch(setPosts(newPost));
       setTitle("");
       setDesc("");
+      
+      
     } catch (error) {
       console.error("Error occurred while submitting:", error.response?.data ?? error.message);
     }
