@@ -2,6 +2,8 @@
     width: 15rem;
     margin: 0px 25px 40px 25px;
     height: 18rem;
+   
+   
     
 }
 .postInfo{
@@ -9,6 +11,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+  
+   
 }
 
 
@@ -44,6 +48,8 @@
 .post-container {
     box-shadow: 0px 0px 10px rgba(46, 189, 217, 0.2); 
     padding: 20px; 
+    
+   
     
     
   }
