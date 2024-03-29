@@ -83,3 +83,23 @@ export const likePost = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const addComment = async (req, res) => {
+  try {
+    const { id } = req.params; 
+    const { comment } = req.body; 
+    
+
+    // Find the post by ID and update its comments array
+    const updatedPost = await Post.findByIdAndUpdate(
+      id,
+      { $push: { comments: comment } }, // Add the new comment to the comments array
+      { new: true } // Return the updated post
+    );
+
+    res.status(200).json(updatedPost); // Respond with the updated post
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
