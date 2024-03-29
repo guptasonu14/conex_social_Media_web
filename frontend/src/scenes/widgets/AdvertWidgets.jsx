@@ -14,14 +14,6 @@ const StyledWidgetWrapper = styled(WidgetWrapper)(({ theme }) => ({
 
 const ads = [
   {
-    sponsor: "MikaCosmetics",
-    website: "mikacosmetics.com",
-    description:
-      "Your pathway to stunning and immaculate beauty and made sure your skin is exfoliating skin and shining like light.",
-    image: "http://localhost:8000/assets/info1.jpeg",
-  },
-  // Add more ads here...
-  {
     sponsor: "The Cookhouse",
     website: "cookhouse.com",
     description:
@@ -47,7 +39,7 @@ const ads = [
     website: "fitzone.com",
     description:
       "We belive that everyone deserves to be fit and healthy.Our gym offers a variety of classes and programs to fit all.",
-    image: "http://localhost:8000/assets/info4.png",
+    image: "http://localhost:8000/assets/info5.png",
   },
 ];
 
