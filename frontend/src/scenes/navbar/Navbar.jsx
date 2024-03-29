@@ -1,25 +1,7 @@
- import { useState } from "react";
-import {
-  Box,
-  IconButton,
-  InputBase,
-  Typography,
-  Select,
-  MenuItem,
-  FormControl,
-  useTheme,
-  useMediaQuery,
-} from "@mui/material";
-import {
-  Search,
-  Message,
-  DarkMode,
-  LightMode,
-  Notifications,
-  Help,
-  Menu,
-  Close,
-} from "@mui/icons-material";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; 
+import { Typography, InputBase, IconButton, Select, MenuItem, FormControl, Box } from "@mui/material";
+import { Search, Message, DarkMode, LightMode, Notifications, Help, Menu, Close } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "../../state/index";
@@ -27,11 +9,13 @@ import { useNavigate } from "react-router-dom";
 import FlexBetween from "../../components/FlexBetween";
 import Write from "../blog/Write"
 import HomeArticle from "../homearticle/HomeArticle";
+import { useTheme, useMediaQuery } from '@mui/material';
+import { LazyLoadImage } from 'react-lazy-load-image-component'; 
+import 'react-lazy-load-image-component/src/effects/blur.css'; 
  
-
-
 const Navbar = () => {
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
+  const [searchInput, setSearchInput] = useState(''); // State for search input
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
@@ -46,15 +30,21 @@ const Navbar = () => {
 
   const fullName = `${user.firstName} ${user.lastName}`;
 
-
- 
- 
   const handlewriteIconClick = () => {
     navigate("/Write");
   };
+
   const handlearticleIconClick = () => {
     navigate("/HomeArticle");
- 
+  };
+
+  const handleSearchInputChange = (event) => {
+    setSearchInput(event.target.value);
+  };
+
+  const handleSearch = () => {
+    // Perform search action using searchInput value
+    console.log("Searching for:", searchInput);
   };
 
   return (
@@ -67,21 +57,18 @@ const Navbar = () => {
     >
       <FlexBetween gap="1.75rem">
         <div className="logo" style={{ zIndex: 1, margin: "5px 0", top: "0" }}>
-          <img
-            src=".\src\assets\logo.png"
-            className="img-fluid"
-            style={{ width: "90px" }}
+          <LazyLoadImage
             alt="Logo"
+            src="./src/assets/logo.png"
+            threshold={500}
+            effect="blur"
+            width="90px"
             onClick={() => navigate("/home")}
-            sx={{
-              "&:hover": {
-                color: primaryLight,
-                cursor: "pointer",
-              },
-            }}
+            style={{ cursor: "pointer" }}
           />
         </div>
 
+        {/* Search Input */}
         {isNonMobileScreens && (
           <FlexBetween
             backgroundColor={neutralLight}
@@ -89,8 +76,12 @@ const Navbar = () => {
             gap="3rem"
             padding="0.1rem 1.5rem"
           >
-            <InputBase placeholder="Search..." />
-            <IconButton>
+            <InputBase 
+              placeholder="Search by username..."
+              value={searchInput}
+              onChange={handleSearchInputChange}
+            />
+            <IconButton onClick={handleSearch}>
               <Search />
             </IconButton>
           </FlexBetween>
@@ -109,7 +100,6 @@ const Navbar = () => {
           </IconButton> 
  
           <IconButton onClick={handlearticleIconClick}>
-
             <Message sx={{ fontSize: "25px" }} />
           </IconButton>
           <IconButton onClick={handlewriteIconClick}>
@@ -227,4 +217,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
