@@ -1,61 +1,45 @@
-import { useState } from "react";
-import "./Write.css";
-import { useSelector } from "react-redux";
-
 export default function Write() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-
-  const token = useSelector((state) => state.token);
-
-  
-
-  const { userData } = useSelector((store) => store.user);
+  const userData = useSelector(state => state.userData); // Assuming userData is stored in Redux state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newPost = {
+    console.log("Title:", title);
+    console.log("Description:", desc);
 
-    
+    const newPost = {
       title,
       desc,
     };
-   console.log(newPost)
-    try {
-      const response = await fetch("http://localhost:8000/blogs", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: JSON.stringify(newPost),
-      });
-      
-      
 
-      if (!response.ok) {
-        throw new Error("Failed to create post");
+    console.log("New Post:", newPost);
+
+    if (userData && userData.userId) {
+      const newPostWithUserId = {
+        userId: userData.userId,
+        title,
+        desc,
+      };
+
+      console.log("New Post with UserId:", newPostWithUserId);
+
+      try {
+        const res = await axios.post("http://localhost:8000/blogs", newPostWithUserId);
+        console.log(res);
+        window.location.replace("/post/" + res.data._id);
+      } catch (err) {
+        console.log(err);
       }
-
-      console.log("Post created successfully!");
-      // You can navigate to another page or update the UI as needed
-    } catch (error) {
-      console.error("Error creating post:", error.message);
+    } else {
+      console.error("userData or userData.userId is undefined");
     }
   };
-   
- 
- 
-
-      username: userData.username,
-      title,
-      desc,
-    };
-   
-};
 
   return (
     <div className="write">
-     <form className="writeForm" onSubmit={handleSubmit}>
+      <form className="writeForm" onSubmit={handleSubmit}>
         <div className="writeFormGroup">
-          
           <input
             type="text"
             placeholder="Title"

@@ -1,17 +1,12 @@
-import { useState } from "react";
-import "./Write.css";
-import axios from "axios";
-import { useSelector } from "react-redux";
-
 export default function Write() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
+  const userData = useSelector(state => state.userData); // Assuming userData is stored in Redux state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Title:", title);
     console.log("Description:", desc);
-
 
     const newPost = {
       title,
@@ -20,31 +15,17 @@ export default function Write() {
 
     console.log("New Post:", newPost);
 
-    // The following code is commented out for debugging purposes
-    /*
-    try {
-      const res = await axios.post("http://localhost:8000/blogs", newPost);
-      console.log(res);
-      window.location.replace("/post/" + res.data._id);
-    } catch (err) {
-      console.log(err);
-    }
-    */
-  };
-
-  
-    // Check if userData is defined and has the userId property
     if (userData && userData.userId) {
-      const newPost = {
+      const newPostWithUserId = {
         userId: userData.userId,
         title,
         desc,
       };
-  
-      console.log("New Post:", newPost);
-  
+
+      console.log("New Post with UserId:", newPostWithUserId);
+
       try {
-        const res = await axios.post("http://localhost:8000/blogs", newPost);
+        const res = await axios.post("http://localhost:8000/blogs", newPostWithUserId);
         console.log(res);
         window.location.replace("/post/" + res.data._id);
       } catch (err) {
@@ -54,8 +35,6 @@ export default function Write() {
       console.error("userData or userData.userId is undefined");
     }
   };
-  
-
 
   return (
     <div className="write">
