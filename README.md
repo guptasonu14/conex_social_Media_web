@@ -13,6 +13,28 @@ Our social media website provides a platform for users to share images and artic
 - CI/CD Integration: We've implemented CI/CD pipelines to automate the build, test, and deployment processes, ensuring smooth and efficient development workflows.
 - AWS Integration: Leveraging AWS services such as EC2 for hosting and S3 for storing images enhances scalability, reliability, and performance.
 
+## Project Screenshot
+## Screenshots
+1. LoginPage
+ ![loginpage](https://github.com/guptasonu14/conex_social_Media_web/assets/74126459/823d9145-5289-42e1-b2d3-57d4ad4e7376)
+
+
+2.SignUp Page
+ ![signup Page](https://github.com/guptasonu14/conex_social_Media_web/assets/74126459/28f87675-cf6c-4af6-86a6-af8a4d43a198)
+
+
+
+3. HomePage of Post
+  ![Home](https://github.com/guptasonu14/conex_social_Media_web/assets/74126459/c7a215a4-00e4-49ed-bea9-c5a180b0a87e)
+
+
+
+4. Article
+  ![article](https://github.com/guptasonu14/conex_social_Media_web/assets/74126459/2b517147-6f1a-40cc-ab7e-c854a5ac7ef5)
+
+
+
+
 ## Project Structure 
 ```plaintext
 conex/
@@ -114,20 +136,5 @@ conex/
 ├── .gitignore
 └── README.md
 
-## Screenshots
-1. First page (banner)
-   ![First Page](path/to/first-page-image)![image](https://github.com/guptasonu14/Moviex/assets/74126459/08f11c26-1f6b-4ef6-9fa2-9048d99fb70c)
-
-
-2. Trending page
-   ![Trending Page]![image](https://github.com/guptasonu14/Moviex/assets/74126459/f1da4528-4d0d-4714-ba35-74c7c8063656)
-
-
-3. Individual Page
-   ![Individual Page]![image](https://github.com/guptasonu14/Moviex/assets/74126459/57665897-ce14-4436-be35-5cd537c74f31)
-
-
-4. Search Results
-   ![Search Results](![image](https://github.com/guptasonu14/Moviex/assets/74126459/139d0ffe-f93c-4ad8-afb8-05e828f38e78)
 
 
