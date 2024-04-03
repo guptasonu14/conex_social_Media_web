@@ -114,4 +114,20 @@ conex/
 ├── .gitignore
 └── README.md
 
+## Screenshots
+1. First page (banner)
+   ![First Page](path/to/first-page-image)![image](https://github.com/guptasonu14/Moviex/assets/74126459/08f11c26-1f6b-4ef6-9fa2-9048d99fb70c)
+
+
+2. Trending page
+   ![Trending Page]![image](https://github.com/guptasonu14/Moviex/assets/74126459/f1da4528-4d0d-4714-ba35-74c7c8063656)
+
+
+3. Individual Page
+   ![Individual Page]![image](https://github.com/guptasonu14/Moviex/assets/74126459/57665897-ce14-4436-be35-5cd537c74f31)
+
+
+4. Search Results
+   ![Search Results](![image](https://github.com/guptasonu14/Moviex/assets/74126459/139d0ffe-f93c-4ad8-afb8-05e828f38e78)
+
 
