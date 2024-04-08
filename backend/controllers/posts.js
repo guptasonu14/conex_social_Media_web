@@ -1,39 +1,31 @@
 import Post from "../models/Post.js";
 import User from "../models/User.js";
-import uploadOnCloudinary from "../utils/cloudinary.js";
+
 
 /* CREATE */
 export const createPost = async (req, res) => {
   try {
-    
-    const { userId, description } = req.body;
-    console.log("User ID:", userId);
-    console.log("Description:", description);
+    const { userId, description, picturePath } = req.body;
     const user = await User.findById(userId);
-    console.log("User:", user);
-    const file = req.file;
-    console.log("File:", file); 
-
-    const picturePath = req.file ? await uploadOnCloudinary(req.file.path) : null;
-
     const newPost = new Post({
       userId,
       firstName: user.firstName,
       lastName: user.lastName,
       description,
-      picturePath: picturePath ? picturePath.url : null,
+      userPicturePath: user.picturePath,
+      picturePath,
       likes: {},
       comments: [],
     });
-
     await newPost.save();
-    const posts = await Post.find().sort({ createdAt: -1 });
-    res.status(201).json(posts);
+
+    const post = await Post.find();
+    res.status(201).json(post);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: err.message || "Internal server error" });
+    res.status(409).json({ message: err.message });
   }
 };
+
 
 /* READ */
 export const getFeedPosts = async (req, res) => {
@@ -79,21 +71,33 @@ export const likePost = async (req, res) => {
 
     res.status(200).json(updatedPost);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(404).json({ message: err.message });
   }
 };
-
 export const addComment = async (req, res) => {
   try {
-    const { id } = req.params; 
-    const { comment } = req.body; 
-    
+    const { id } = req.params;
+    const { userId, comment } = req.body;
+
+    // Find the user by ID to get the first name and last name
+    const user = await User.findById(userId);
+
+    // Check if user exists
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Create a comment object with the username and comment text
+    const newComment = {
+      userId,
+      userName: `${user.firstName} ${user.lastName}`,
+      comment
+    };
 
     // Find the post by ID and update its comments array
     const updatedPost = await Post.findByIdAndUpdate(
       id,
-      { $push: { comments: comment } }, // Add the new comment to the comments array
+      { $push: { comments: newComment } }, // Add the new comment to the comments array
       { new: true } // Return the updated post
     );
 
@@ -103,3 +107,4 @@ export const addComment = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+

@@ -2,29 +2,30 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
+import multer from "multer";
 import helmet from "helmet";
 import morgan from "morgan";
-
+import path from "path";
+import { fileURLToPath } from "url";
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
 import blogRoutes from "./routes/blogs.js";
-
 import { register } from "./controllers/auth.js";
 import { createPost } from "./controllers/posts.js";
 import { createBlog } from "./controllers/blog.js";
 import { verifyToken } from "./middleware/auth.js";
-
+import { users, posts } from "./data/index.js";
 import connectDB from "./db/index.js";
 
 import User from "./models/User.js";
 import Post from "./models/Post.js";
 import Blog from "./models/Blog.js"
 
-import { upload } from "./middleware/multer.middleware.js"; 
-
+/* CONFIGURATIONS */
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 dotenv.config({ path: './.env' });
-
 const app = express();
 
 // Middleware
@@ -44,16 +45,28 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static("public"));
+app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something went wrong!');
 });
 
-// Routes
-app.post("/auth/register", upload.single("picturePath"), register);
+/* FILE STORAGE */
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/assets");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage });
 
-app.post("/posts", verifyToken, upload.single("picturePath"), createPost);
+
+/* ROUTES WITH FILES */
+app.post("/auth/register", upload.single("picture"), register);
+app.post("/posts", verifyToken, upload.single("picture"), createPost);
 app.post("/blogs", verifyToken, createBlog);
 
 // Additional routes...

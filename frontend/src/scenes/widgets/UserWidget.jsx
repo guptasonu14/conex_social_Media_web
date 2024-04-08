@@ -4,15 +4,13 @@ import {
   LocationOnOutlined,
   WorkOutlineOutlined,
 } from "@mui/icons-material";
-import { Box, Typography, Divider, useTheme, styled } from "@mui/material";
+import { Box, Typography, Divider, useTheme } from "@mui/material";
 import UserImage from "../../components/UserImage";
 import FlexBetween from "../../components/FlexBetween";
 import WidgetWrapper from "../../components/WidgetWrapper";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
-
 
 const UserWidget = ({ userId, picturePath }) => {
   const [user, setUser] = useState(null);
@@ -34,7 +32,7 @@ const UserWidget = ({ userId, picturePath }) => {
 
   useEffect(() => {
     getUser();
-  }, []); 
+  }, []);
 
   if (!user) {
     return null;
@@ -50,7 +48,16 @@ const UserWidget = ({ userId, picturePath }) => {
   } = user;
 
   return (
-    <WidgetWrapper sx={{ position: "fixed", top: "115px", zIndex: 1000, width: "350px", maxHeight: "calc(100vh - 100px)", overflowY: "auto" }}>
+    <WidgetWrapper
+      sx={{
+        position: "fixed",
+        top: "115px",
+        zIndex: 1000,
+        width: "350px",
+        maxHeight: "calc(100vh - 100px)",
+        overflowY: "auto",
+      }}
+    >
       {/* FIRST ROW */}
       <FlexBetween
         gap="0.5rem"
@@ -109,8 +116,8 @@ const UserWidget = ({ userId, picturePath }) => {
 
       <Divider />
 
-      {/* FOURTH ROW */}
-      <Box p="1rem 0">
+      {/* FOURTH ROW - Social Profiles (Hidden on Mobile) */}
+      <Box p="1rem 0" sx={{ display: { xs: "none", sm: "none", md: "block" } }}>
         <Typography fontSize="1rem" color={main} fontWeight="500" mb="1rem">
           Social Profiles
         </Typography>

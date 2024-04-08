@@ -1,7 +1,7 @@
 
 import { Box, Typography, useTheme } from "@mui/material";
 import Friend from "../../components/Friend";
-import { styled } from "@mui/system"; // Don't forget to import 'styled'
+import { styled } from "@mui/system"; 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriends } from "../../state/index";
@@ -17,13 +17,12 @@ const StyledWidgetWrapper = styled(Box)(({ theme }) => ({
   borderRadius: "1rem",
   backgroundColor: theme.palette.background.paper,
   boxShadow: theme.palette.mode === "dark" ? "0 2px 4px rgba(255, 255, 255, 0.3)" : "0 2px 4px rgba(0, 0, 0, 0.3)",
-  position: "sticky", // Add this line
+  position: "sticky", 
   top: "calc(43.5vh - 200px)", 
-  //top: "560px", // Adjust the top position as needed
   left:"71%",
   width:"350px",
-  maxHeight: "calc(100vh - 280px)", // Set height to fill the available viewport space
-  zIndex: 1000, // Ensure it appears above other content
+  maxHeight: "calc(100vh - 280px)", 
+  zIndex: 1000, 
   overflowY: "scroll", 
   "::-webkit-scrollbar": {
     display: "none",
