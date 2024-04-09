@@ -7,12 +7,14 @@ const UserSchema = new mongoose.Schema(
       required: true,
       min: 2,
       max: 50,
+      index: true,
     },
     lastName: {
       type: String,
       required: true,
       min: 2,
       max: 50,
+      index: true,
     },
     email: {
       type: String,
@@ -33,7 +35,7 @@ const UserSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
-    location: String,
+    
     occupation: String,
     viewedProfile: Number,
     impressions: Number,

@@ -1,4 +1,4 @@
-
+ 
 import { useState } from "react";
 import {
   Box,
@@ -24,7 +24,6 @@ const PostWidget = ({
   postUserId,
   name,
   description,
-  location,
   picturePath,
   userPicturePath,
   likes,
@@ -33,6 +32,7 @@ const PostWidget = ({
   const [isComments, setIsComments] = useState(false);
   const [newComment, setNewComment] = useState(""); // State to manage new comment input
   const [comments, setComments] = useState(initialComments); // Manage comments
+  //const [likeCount, setLikeCount] = useState(Object.keys(likes).length); // Manage like count
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const loggedInUserId = useSelector((state) => state.user._id);
@@ -44,25 +44,36 @@ const PostWidget = ({
   const primary = palette.primary.main;
 
   const patchLike = async () => {
-    // Your existing like functionality
-  };
-
-  const handleCommentSubmit = async () => {
-    // Submit the new comment
-    // Example: You may want to send a request to your backend to save the comment
-    const response = await fetch(`http://localhost:8000/posts/${postId}/comment`, {
-      method: "POST",
+    const response = await fetch(`http://localhost:8000/posts/${postId}/like`, {
+      method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userId: loggedInUserId, comment: newComment }),
+      body: JSON.stringify({ userId: loggedInUserId }),
     });
-    const updatedPost = await response.json(); // Assuming your backend returns the updated post
-    // Update local state with the new comment
-    setComments(updatedPost.comments);
-    // Clear the new comment input field
-    setNewComment("");
+    const updatedPost = await response.json();
+    dispatch(setPost({ post: updatedPost }));
+  };
+
+  const handleCommentSubmit = async () => {
+    try {
+      const response = await fetch(`http://localhost:8000/posts/${postId}/comment`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: loggedInUserId, comment: newComment }),
+      });
+      const updatedPost = await response.json();
+      // Update local state with the new comment
+      setComments(updatedPost.comments);
+      // Clear the new comment input field
+      setNewComment("");
+    } catch (error) {
+      console.error("Error adding comment:", error);
+    }
   };
 
   return (
@@ -71,7 +82,6 @@ const PostWidget = ({
       <Friend
         friendId={postUserId}
         name={name}
-        subtitle={location}
         userPicturePath={userPicturePath}
       />
       <Typography color={main} sx={{ mt: "1rem" }}>
@@ -120,7 +130,7 @@ const PostWidget = ({
             <Box key={`${name}-${i}`}>
               <Divider />
               <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
-                {comment}
+                {comment.comment}
               </Typography>
             </Box>
           ))}
@@ -145,3 +155,4 @@ const PostWidget = ({
 };
 
 export default PostWidget;
+

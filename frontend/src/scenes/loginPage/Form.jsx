@@ -56,12 +56,12 @@ const Form = () => {
   const isRegister = pageType === "register";
 
   const register = async (values, onSubmitProps) => {
-    // this allows us to send form info with image
+   
     const formData = new FormData();
     for (let value in values) {
       formData.append(value, values[value]);
     }
-    formData.append("picturePath", `assets/${values.picture.name}`);
+    formData.append("picturePath", `public/assets/${values.picture.name}`);
 
     console.log(formData);
 
@@ -173,7 +173,7 @@ const Form = () => {
                   border={`1px solid ${palette.neutral.medium}`}
                   borderRadius="5px"
                   p="1rem"
-                  mt="20px" // Add margin to push the box down
+                  mt="20px" 
                 >
                   <Dropzone
                     acceptedFiles=".jpg,.jpeg,.png"
@@ -190,7 +190,7 @@ const Form = () => {
                         sx={{ "&:hover": { cursor: "pointer" } }}
                       >
                         <input {...getInputProps()} />
-                        {/* Conditionally render the image */}
+                       
                         {values.picture ? (
                           <img
                             src={URL.createObjectURL(values.picture)}

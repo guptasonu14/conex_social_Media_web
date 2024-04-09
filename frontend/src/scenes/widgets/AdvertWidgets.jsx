@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Typography, useTheme, styled } from "@mui/material";
 import FlexBetween from "../../components/FlexBetween";
 import WidgetWrapper from "../../components/WidgetWrapper";
+import LazyLoad from 'react-lazyload'; 
 
 const StyledWidgetWrapper = styled(WidgetWrapper)(({ theme }) => ({
   boxShadow:
@@ -17,22 +18,19 @@ const ads = [
   {
     sponsor: "The Cookhouse",
     website: "cookhouse.com",
-    description:
-      "Fast and yummy.Good for your tummy",
+    description: "Fast and yummy.Good for your tummy",
     image: "http://localhost:8000/assets/info2.png",
   },
   {
     sponsor: "Moire",
     website: "Moirefashion.com",
-    description:
-      "Unleash your inner fashionista",
+    description: "Unleash your inner fashionista",
     image: "http://localhost:8000/assets/info3.png",
   },
   {
     sponsor: "Realgreatsite",
     website: "realgreatsite.com",
-    description:
-      "Wherever life plants you,bloom with decor!",
+    description: "Wherever life plants you,bloom with decor!",
     image: "http://localhost:8000/assets/info4.png",
   },
   {
@@ -55,7 +53,7 @@ const AdvertWidget = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentAdIndex((prevIndex) => (prevIndex + 1) % ads.length);
-    }, 3000); 
+    }, 3000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -68,17 +66,16 @@ const AdvertWidget = () => {
         <Typography color={dark} variant="h5" fontWeight="500">
           Sponsored
         </Typography>
-       
       </FlexBetween>
-      <img
-        width="100%"
-        height="auto"
-        alt="advert"
- 
-        src={currentAd.image}
- 
-        style={{ borderRadius: "0.75rem", margin: "0.75rem 0" }}
-      />
+      <LazyLoad height={200} offset={100}>
+        <img
+          width="100%"
+          height="auto"
+          alt="advert"
+          src={currentAd.image}
+          style={{ borderRadius: "0.75rem", margin: "0.75rem 0" }}
+        />
+      </LazyLoad>
       <FlexBetween>
         <Typography color={main}>{currentAd.sponsor}</Typography>
         <Typography color={medium}>{currentAd.website}</Typography>
@@ -96,4 +93,3 @@ const AdvertWidget = () => {
 
  
 export default AdvertWidget;
- 

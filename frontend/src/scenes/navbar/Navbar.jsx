@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; 
 import { Typography, InputBase, IconButton, Select, MenuItem, FormControl, Box } from "@mui/material";
-import { Search, Message, DarkMode, LightMode, Notifications, Help, Menu, Close } from "@mui/icons-material";
+import { Search, Message, DarkMode, LightMode,   Help, Menu, Close } from "@mui/icons-material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "../../state/index";
@@ -107,7 +106,7 @@ const Navbar = () => {
             <EditIcon sx={{ fontSize: "25px" }} />
           </IconButton>
 
-          <Notifications sx={{ fontSize: "25px" }} />
+          {/* <Notifications sx={{ fontSize: "25px" }} /> */}
 
           <FormControl variant="standard" value={fullName}>
             <Select
@@ -182,7 +181,7 @@ const Navbar = () => {
               )}
             </IconButton>
             <Message sx={{ fontSize: "25px" }} />
-            <Notifications sx={{ fontSize: "25px" }} />
+            {/* <Notifications sx={{ fontSize: "25px" }} /> */}
             <Help sx={{ fontSize: "25px" }} />
             <FormControl variant="standard" value={fullName}>
               <Select
@@ -218,4 +217,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
