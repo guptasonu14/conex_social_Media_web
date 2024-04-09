@@ -1,3 +1,4 @@
+ 
 import React, { useState, useEffect } from "react";
 import { Typography, useTheme, styled } from "@mui/material";
 import FlexBetween from "../../components/FlexBetween";
@@ -41,6 +42,7 @@ const ads = [
   },
 ];
 
+ 
 const AdvertWidget = () => {
   const [currentAdIndex, setCurrentAdIndex] = useState(0);
   const { palette } = useTheme();
@@ -59,7 +61,7 @@ const AdvertWidget = () => {
   const currentAd = ads[currentAdIndex];
 
   return (
-    <StyledWidgetWrapper>
+    <WidgetWrapper>
       <FlexBetween>
         <Typography color={dark} variant="h5" fontWeight="500">
           Sponsored
@@ -81,8 +83,13 @@ const AdvertWidget = () => {
       <Typography color={medium} m="0.5rem 0">
         {currentAd.description}
       </Typography>
-    </StyledWidgetWrapper>
+    </WidgetWrapper>
   );
 };
 
+ 
+
+ 
+
+ 
 export default AdvertWidget;

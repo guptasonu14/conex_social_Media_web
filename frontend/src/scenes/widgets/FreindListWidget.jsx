@@ -1,3 +1,4 @@
+ 
 
 import { Box, Typography, useTheme } from "@mui/material";
 import Friend from "../../components/Friend";
@@ -52,7 +53,8 @@ const FriendListWidget = ({ userId }) => {
   }, []); 
 
   return (
-    <StyledWidgetWrapper>
+    <StyledWidgetWrapper> 
+    
       <Typography
         color={palette.neutral.dark}
         variant="h5"
@@ -73,7 +75,7 @@ const FriendListWidget = ({ userId }) => {
 ))}
 
       </Box>
-    </StyledWidgetWrapper>
+      </StyledWidgetWrapper>
   );
 };
 
