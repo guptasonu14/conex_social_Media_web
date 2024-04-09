@@ -1,42 +1,38 @@
-import { Box, Typography, useTheme, useMediaQuery } from "@mui/material";
+import React from 'react';
+import { Link } from 'react-router-dom'; 
+import { Typography } from "@mui/material";
 import Form from "./Form";
-import './Login.css'
+import { MDBBtn, MDBContainer, MDBRow, MDBCol, MDBInput } from 'mdb-react-ui-kit';
+import './Login.css';
 
 const LoginPage = () => {
-  const theme = useTheme();
-  const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   return (
-    <Box
-      style={{
-        position: 'relative',
-        height: '100vh',
-        overflow: 'hidden',
-        textAlign: 'center',  // Center the content horizontally
-      }}
-    >
-      <div className="logo" style={{ zIndex: 1 }}>
-        <img src=".\src\assets\logo.png" className="img-fluid" style={{ width: '180px', marginTop: '3rem' }} alt="Logo" />
-      </div>
-    
-      <Box
-        style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: isNonMobileScreens ? "50%" : "93%",
-          padding: '2rem',
-          borderRadius: '1.5rem',
-          backgroundColor: theme.palette.background.alt,
-        }}
-      >
+    <MDBContainer className="my-5 gradient-form">
+  <MDBRow>
+    <MDBCol col='6' className="mb-5">
+      <div className="d-flex flex-column ms-5">
+        <div className="text-center">
+          <img src="./src/assets/logo.png" style={{ width: '185px' }} alt="logo" />
+          <h4 className="mt-1 mb-5 pb-1">Welcome to Conex</h4>
+        </div>
         <Typography fontWeight="500" variant="h5" sx={{ mb: "1.5rem" }}>
-          Welcome to Conex, the Social Media for Verto's!
+          We are greatful to welcome you!
         </Typography>
         <Form />
-      </Box>
-    </Box>
+      </div>
+    </MDBCol>
+    
+  <MDBCol col='6' className="mb-5 side-image">
+  <div className="text-center">
+    <img src="./src/assets/side.png" style={{ width: '600px', marginTop: '3rem', boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.5)' }} alt="logo" />
+  </div>
+</MDBCol>
+
+
+  </MDBRow>
+</MDBContainer>
+
   );
-};
+}
 
 export default LoginPage;

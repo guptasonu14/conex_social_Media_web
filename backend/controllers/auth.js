@@ -2,46 +2,57 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import dotenv from "dotenv";
+import uploadOnCloudinary from "../utils/cloudinary.js";
+
 
 
 dotenv.config({
   path: './.env'
-})
+});
 
 /* REGISTER USER */
 export const register = async (req, res) => {
-    console.log(req);
   try {
     const {
       firstName,
       lastName,
       email,
       password,
-      picturePath,
       friends,
       occupation,
     } = req.body;
 
+    // Hash password
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
+
+    const picture = req.files?.picturePath[0]?.path;
+
+    
+
+
+    const picturePath = await uploadOnCloudinary(picture);
 
     const newUser = new User({
       firstName,
       lastName,
       email,
       password: passwordHash,
-      picturePath,
+      picturePath: picturePath.url,
       friends,
       occupation,
       viewedProfile: Math.floor(Math.random() * 10000),
       impressions: Math.floor(Math.random() * 10000),
     });
+
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
+
 
 /* LOGGING IN */
 export const login = async (req, res) => {

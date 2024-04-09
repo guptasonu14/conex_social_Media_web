@@ -1,100 +1,60 @@
 import Blog from "../models/Blog.js";
 import User from "../models/User.js";
 
-import express from "express";
+// CREATE BLOG
+export const createBlog = async (req, res) => {
  
-const app = express();
-
-// Middleware to parse JSON bodies
-app.use(express.json());
-
-// Your route handlers and other middleware...
-
-
-
-
-export const createPost = async (req, res) => {
-
   try {
     const { title, desc, userId } = req.body;
-    const user = await User.findById(userId);
-    const newPost = new Blog({
-        title,
-        desc,
-        userId,
-
-        });
-    const savedPost = await newPost.save();
-    res.status(200).json(savedPost);
+    const newBlog = new Blog({ userId, title, desc });
+    const savedBlog = await newBlog.save();
+    res.status(200).json(savedBlog);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ error: err.message });
   }
 };
 
-export const updatePost = async (req, res) => {
+// UPDATE BLOG
+export const updateBlog = async (req, res) => {
   try {
-    const post = await Blog.findById(req.params.id);
-    const userId = "user_id_placeholder"; // Change this to get the user ID from authentication
-    if (post.userId === userId) {
-      try {
-        const updatedPost = await Blog.findByIdAndUpdate(
-          req.params.id,
-          {
-            $set: req.body,
-          },
-          { new: true }
-        );
-        res.status(200).json(updatedPost);
-      } catch (err) {
-        res.status(500).json(err);
-      }
-    } else {
-      res.status(401).json("You can update only your post!");
-    }
+    const { id } = req.params;
+    const { title, desc } = req.body;
+    const updatedBlog = await Blog.findByIdAndUpdate(id, { title, desc }, { new: true });
+    res.status(200).json(updatedBlog);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ error: err.message });
   }
 };
 
-export const deletePost = async (req, res) => {
+// DELETE BLOG
+export const deleteBlog = async (req, res) => {
   try {
-    const post = await Blog.findById(req.params.id);
-    const userId = "user_id_placeholder"; // Change this to get the user ID from authentication
-    if (post.userId === userId) {
-      try {
-        await Blog.findByIdAndDelete(req.params.id);
-        res.status(200).json("Post has been deleted...");
-      } catch (err) {
-        res.status(500).json(err);
-      }
-    } else {
-      res.status(401).json("You can delete only your post!");
-    }
+    const { id } = req.params;
+    await Blog.findByIdAndDelete(id);
+    res.status(200).json({ message: "Blog deleted successfully" });
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ error: err.message });
   }
 };
 
-export const getPostById = async (req, res) => {
+// GET BLOG BY ID
+export const getBlogById = async (req, res) => {
   try {
-    const post = await Blog.findById(req.params.id);
-    res.status(200).json(post);
+    const { id } = req.params;
+    const blog = await Blog.findById(id);
+    res.status(200).json(blog);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ error: err.message });
   }
 };
 
-export const getAllPosts = async (req, res) => {
-  const userId = req.query.user;
+
+// GET ALL BLOGS
+export const getAllBlogs = async (req, res) => {
   try {
-    let posts;
-    if (userId) {
-      posts = await Blog.find({ userId });
-    } else {
-      posts = await Blog.find();
-    }
-    res.status(200).json(posts);
+    const blogs = await Blog.find().sort({ createdAt: -1 }); 
+    res.status(200).json(blogs);
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).json({ error: err.message });
   }
 };

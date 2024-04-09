@@ -1,51 +1,61 @@
 import Post from "../models/Post.js";
 import User from "../models/User.js";
+import uploadOnCloudinary from "../utils/cloudinary.js";
 
 /* CREATE */
 export const createPost = async (req, res) => {
   try {
-    const { userId, description, picturePath } = req.body;
+    
+    const { userId, description } = req.body;
+    console.log("User ID:", userId);
+    console.log("Description:", description);
     const user = await User.findById(userId);
+    console.log("User:", user);
+    const file = req.file;
+    console.log("File:", file); 
+
+    const picturePath = req.file ? await uploadOnCloudinary(req.file.path) : null;
+
     const newPost = new Post({
       userId,
       firstName: user.firstName,
       lastName: user.lastName,
-     
       description,
-      userPicturePath: user.picturePath,
-      picturePath,
+      picturePath: picturePath ? picturePath.url : null,
       likes: {},
       comments: [],
     });
-    await newPost.save();
 
-    const post = await Post.find();
-    res.status(201).json(post);
+    await newPost.save();
+    const posts = await Post.find().sort({ createdAt: -1 });
+    res.status(201).json(posts);
   } catch (err) {
-    res.status(409).json({ message: err.message });
+    console.error(err);
+    res.status(500).json({ message: err.message || "Internal server error" });
   }
 };
 
 /* READ */
 export const getFeedPosts = async (req, res) => {
   try {
-    const posts = await Post.find().sort({ createdAt: -1 }); 
+    const posts = await Post.find().sort({ createdAt: -1 });
     res.status(200).json(posts);
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
 export const getUserPosts = async (req, res) => {
   try {
     const { userId } = req.params;
-    const posts = await Post.find({ userId }).sort({ createdAt: -1 }); 
+    const posts = await Post.find({ userId }).sort({ createdAt: -1 });
     res.status(200).json(posts);
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 /* UPDATE */
 export const likePost = async (req, res) => {
@@ -69,6 +79,7 @@ export const likePost = async (req, res) => {
 
     res.status(200).json(updatedPost);
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };

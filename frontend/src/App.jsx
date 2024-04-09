@@ -5,10 +5,15 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 
 import { themeSettings } from "./theme"; 
+
 //import LoginPage from "..src/scenes/loginpage/LoginPage"
 import LoginPage from "../src/scenes/loginPage/LoginPage";
  
 
+ 
+//import LoginPage from "./scenes/loginpage/LoginPage"
+import SinglePost from "./components/singlePost/SinglePost";
+ 
 import HomePage from "../src/scenes/homepage/HomePage";
 import ProfilePage from "../src/scenes/profilepage/ProfilePage";
 import HomeArticle from "../src/scenes/homearticle/HomeArticle";
@@ -26,19 +31,11 @@ const App = () => {
           <CssBaseline />
           <Routes>
             <Route path="/" element={<LoginPage />} />
-            <Route
-              path="/home"
-              element={isAuth ? <HomePage /> : <Navigate to="/" />}
-            />
-            <Route
-              path="/profile/:userId"
-              element={isAuth ? <ProfilePage /> : <Navigate to="/" />}
-            />
-            <Route path="homearticle" element={<HomeArticle />} />
-            <Route
-              path="/write"
-              element={isAuth ? <Write /> : <Navigate to="/" />}
-            />
+            <Route path="/home" element={isAuth ? <HomePage /> : <Navigate to="/" />} />
+            <Route path="/profile/:userId" element={isAuth ? <ProfilePage /> : <Navigate to="/" />} />
+            <Route path="/homearticle" element={<HomeArticle />} />
+            <Route path="/write" element={isAuth ? <Write /> : <Navigate to="/" />} />
+            <Route path="/blogs/:id" element={<SinglePost />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>
