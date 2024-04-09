@@ -54,7 +54,19 @@ export const likePost = async (req, res) => {
   try {
     const { id } = req.params;
     const { userId } = req.body;
+
+    // Check if post exists
     const post = await Post.findById(id);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    // Check if userId is provided
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    // Check if user has already liked the post
     const isLiked = post.likes.get(userId);
 
     if (isLiked) {
@@ -63,21 +75,31 @@ export const likePost = async (req, res) => {
       post.likes.set(userId, true);
     }
 
+    // Update the post with new likes
     const updatedPost = await Post.findByIdAndUpdate(
       id,
       { likes: post.likes },
       { new: true }
     );
 
+    // Send the updated post as response
     res.status(200).json(updatedPost);
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    // Handle any errors
+    console.error("Error liking post:", err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
+
 export const addComment = async (req, res) => {
   try {
     const { id } = req.params;
     const { userId, comment } = req.body;
+
+    // Validate userId and comment fields
+    if (!userId || !comment) {
+      return res.status(400).json({ message: "UserId and comment are required" });
+    }
 
     // Find the user by ID to get the first name and last name
     const user = await User.findById(userId);
@@ -90,7 +112,7 @@ export const addComment = async (req, res) => {
     // Create a comment object with the username and comment text
     const newComment = {
       userId,
-      userName: `${user.firstName} ${user.lastName}`,
+      userName: `${user.firstName} ${user.lastName}`, // Include username
       comment
     };
 
@@ -107,4 +129,6 @@ export const addComment = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+
 

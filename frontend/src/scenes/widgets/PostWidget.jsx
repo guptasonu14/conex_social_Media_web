@@ -23,7 +23,6 @@ const PostWidget = ({
   postUserId,
   name,
   description,
-  location,
   picturePath,
   userPicturePath,
   likes,
@@ -43,25 +42,41 @@ const PostWidget = ({
   const primary = palette.primary.main;
 
   const patchLike = async () => {
-    // Your existing like functionality
+    try {
+      const response = await fetch(`http://localhost:8000/posts/${postId}/like`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: loggedInUserId }),
+      });
+      const updatedPost = await response.json();
+      // Update local state with the updated likes
+      setLikes(updatedPost.likes);
+    } catch (error) {
+      console.error("Error liking post:", error);
+    }
   };
 
   const handleCommentSubmit = async () => {
-    // Submit the new comment
-    // Example: You may want to send a request to your backend to save the comment
-    const response = await fetch(`http://localhost:8000/posts/${postId}/comment`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userId: loggedInUserId, comment: newComment }),
-    });
-    const updatedPost = await response.json(); // Assuming your backend returns the updated post
-    // Update local state with the new comment
-    setComments(updatedPost.comments);
-    // Clear the new comment input field
-    setNewComment("");
+    try {
+      const response = await fetch(`http://localhost:8000/posts/${postId}/comment`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: loggedInUserId, comment: newComment }),
+      });
+      const updatedPost = await response.json();
+      // Update local state with the new comment
+      setComments(updatedPost.comments);
+      // Clear the new comment input field
+      setNewComment("");
+    } catch (error) {
+      console.error("Error adding comment:", error);
+    }
   };
 
   return (
@@ -70,7 +85,6 @@ const PostWidget = ({
       <Friend
         friendId={postUserId}
         name={name}
-        subtitle={location}
         userPicturePath={userPicturePath}
       />
       <Typography color={main} sx={{ mt: "1rem" }}>
@@ -119,8 +133,9 @@ const PostWidget = ({
             <Box key={`${name}-${i}`}>
               <Divider />
               <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
-                {comment}
-              </Typography>
+  {comment.comment}
+</Typography>
+
             </Box>
           ))}
           <Divider />
