@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Checkout') {
             steps {
@@ -42,6 +42,6 @@ pipeline {
             }
         }
         
-       
+        // Add more stages as needed for deployment, etc.
     }
 }
