@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout source code from version control
-                git 'https://github.com/guptasonu14/conex_social_Media_web.git'
+                git brach: 'main' ,url: 'https://github.com/guptasonu14/conex_social_Media_web.git'
             }
         }
         
