@@ -1,4 +1,3 @@
- 
 import { useState } from "react";
 import {
   Box,
@@ -32,7 +31,6 @@ const PostWidget = ({
   const [isComments, setIsComments] = useState(false);
   const [newComment, setNewComment] = useState(""); // State to manage new comment input
   const [comments, setComments] = useState(initialComments); // Manage comments
-  //const [likeCount, setLikeCount] = useState(Object.keys(likes).length); // Manage like count
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
   const loggedInUserId = useSelector((state) => state.user._id);
@@ -44,16 +42,20 @@ const PostWidget = ({
   const primary = palette.primary.main;
 
   const patchLike = async () => {
-    const response = await fetch(`http://localhost:8000/posts/${postId}/like`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userId: loggedInUserId }),
-    });
-    const updatedPost = await response.json();
-    dispatch(setPost({ post: updatedPost }));
+    try {
+      const response = await fetch(`http://localhost:8000/posts/${postId}/like`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: loggedInUserId }),
+      });
+      const updatedPost = await response.json();
+      dispatch(setPost({ post: updatedPost }));
+    } catch (error) {
+      console.error("Error patching like:", error);
+    }
   };
 
   const handleCommentSubmit = async () => {
@@ -130,7 +132,7 @@ const PostWidget = ({
             <Box key={`${name}-${i}`}>
               <Divider />
               <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
-                {comment.comment}
+                {comment.username}: {comment.comment}
               </Typography>
             </Box>
           ))}
@@ -155,4 +157,3 @@ const PostWidget = ({
 };
 
 export default PostWidget;
-
