@@ -17,6 +17,7 @@
     "@mui/material": "^5.15.11",
     "@reduxjs/toolkit": "^2.2.1",
     "axios": "^1.6.7",
+    "babel-node": "^0.0.1-security",
     "dotenv": "^16.4.5",
     "formik": "^2.4.5",
     "mdb-react-ui-kit": "^7.2.0",
