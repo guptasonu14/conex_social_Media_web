@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "babel-node ./node_modules/vite/bin/vite.js build",
+    "build": "babel-node /absolute/path/to/vite/bin/vite.js build"
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
