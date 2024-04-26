@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
     ChatBubbleOutlineOutlined,
     FavoriteBorderOutlined,
@@ -15,11 +16,14 @@ import {
   const PostWidget = ({
     
     postId,
+    // eslint-disable-next-line react/prop-types
     postUserId,
     name,
     description,
     location,
+    // eslint-disable-next-line react/prop-types
     picturePath,
+    // eslint-disable-next-line react/prop-types
     userPicturePath,
     likes,
     comments,
