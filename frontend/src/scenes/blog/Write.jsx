@@ -15,7 +15,7 @@ export default function Write() {
 
   const instance = axios.create({
     withCredentials: true,
-    baseURL: 'http://localhost:8000'
+    baseURL: 'https://conex-clone.onrender.com'
   })
 
   const handleSubmit = async (e) => {

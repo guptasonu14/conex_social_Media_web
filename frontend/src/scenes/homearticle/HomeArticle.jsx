@@ -12,7 +12,7 @@ const HomeArticle = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const res = await axios.get("http://localhost:8000/blogs/" + search);
+                const res = await axios.get("https://conex-clone.onrender.com/blogs/" + search);
                 setBlogs(res.data);
             } catch (error) {
                 console.error("Error fetching posts:", error);
