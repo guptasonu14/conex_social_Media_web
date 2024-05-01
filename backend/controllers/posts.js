@@ -1,6 +1,7 @@
 import Post from "../models/Post.js";
 import User from "../models/User.js";
 
+
 /* CREATE */
 export const createPost = async (req, res) => {
   try {
@@ -10,7 +11,6 @@ export const createPost = async (req, res) => {
       userId,
       firstName: user.firstName,
       lastName: user.lastName,
-     
       description,
       userPicturePath: user.picturePath,
       picturePath,
@@ -26,23 +26,26 @@ export const createPost = async (req, res) => {
   }
 };
 
+
 /* READ */
 export const getFeedPosts = async (req, res) => {
   try {
-    const post = await Post.find();
-    res.status(200).json(post);
+    const posts = await Post.find().sort({ createdAt: -1 });
+    res.status(200).json(posts);
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
 export const getUserPosts = async (req, res) => {
   try {
     const { userId } = req.params;
-    const post = await Post.find({ userId });
-    res.status(200).json(post);
+    const posts = await Post.find({ userId }).sort({ createdAt: -1 });
+    res.status(200).json(posts);
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -51,7 +54,19 @@ export const likePost = async (req, res) => {
   try {
     const { id } = req.params;
     const { userId } = req.body;
+
+    // Check if post exists
     const post = await Post.findById(id);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    // Check if userId is provided
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    // Check if user has already liked the post
     const isLiked = post.likes.get(userId);
 
     if (isLiked) {
@@ -60,14 +75,60 @@ export const likePost = async (req, res) => {
       post.likes.set(userId, true);
     }
 
+    // Update the post with new likes
     const updatedPost = await Post.findByIdAndUpdate(
       id,
       { likes: post.likes },
       { new: true }
     );
 
+    // Send the updated post as response
     res.status(200).json(updatedPost);
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    // Handle any errors
+    console.error("Error liking post:", err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const addComment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { userId, comment } = req.body;
+
+    // Validate userId and comment fields
+    if (!userId || !comment) {
+      return res.status(400).json({ message: "UserId and comment are required" });
+    }
+
+    // Find the user by ID to get the first name and last name
+    const user = await User.findById(userId);
+
+    // Check if user exists
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Create a comment object with the username and comment text
+    const newComment = {
+      userId,
+      userName: `${user.firstName} ${user.lastName}`, // Include username
+      comment
+    };
+
+    // Find the post by ID and update its comments array
+    const updatedPost = await Post.findByIdAndUpdate(
+      id,
+      { $push: { comments: newComment } }, // Add the new comment to the comments array
+      { new: true } // Return the updated post
+    );
+
+    res.status(200).json(updatedPost); // Respond with the updated post
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+
+

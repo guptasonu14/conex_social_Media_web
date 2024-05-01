@@ -1,10 +1,11 @@
 import { useState } from "react";
+import './Form.css'
 import {
   Box,
   Button,
   TextField,
-  Typography,
   useMediaQuery,
+  Typography,
   useTheme,
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
@@ -17,17 +18,18 @@ import Dropzone from "react-dropzone";
 import FlexBetween from "../../components/FlexBetween";
 
 const registerSchema = yup.object().shape({
-  firstName: yup.string().required("Required"),
-  lastName: yup.string().required("Required"),
-  email: yup.string().email("Invalid email").required("Required"),
-  password: yup.string().required("Required"),
-  occupation: yup.string().required("Required"),
-  picture: yup.string().required("Required"),
+  firstName: yup.string().required("required"),
+  lastName: yup.string().required("required"),
+  email: yup.string().email("invalid email").required("required"),
+  password: yup.string().required("required"),
+
+  occupation: yup.string().required("required"),
+  picture: yup.string().required("required"),
 });
 
 const loginSchema = yup.object().shape({
-  email: yup.string().email("Invalid email").required("Required"),
-  password: yup.string().required("Required"),
+  email: yup.string().email("invalid email").required("required"),
+  password: yup.string().required("required"),
 });
 
 const initialValuesRegister = {
@@ -54,67 +56,46 @@ const Form = () => {
   const isRegister = pageType === "register";
 
   const register = async (values, onSubmitProps) => {
-    try {
-      const formData = new FormData();
-      for (let value in values) {
-        formData.append(value, values[value]);
-      }
-      if (values.picture && values.picture.name) {
-        formData.append("picturePath", `assets/${values.picture.name}`);
-      }
+   
+    const formData = new FormData();
+    for (let value in values) {
+      formData.append(value, values[value]);
+    }
+    formData.append("picturePath", `public/assets/${values.picture.name}`);
 
-      const savedUserResponse = await fetch(
-        "http://localhost:8000/auth/register",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+    console.log(formData);
 
-      if (!savedUserResponse.ok) {
-        throw new Error("Failed to register user");
+    const savedUserResponse = await fetch(
+      "http://localhost:8000/auth/register",
+      {
+        method: "POST",
+        body: formData,
       }
+    );
+    const savedUser = await savedUserResponse.json();
+    onSubmitProps.resetForm();
 
-      const savedUser = await savedUserResponse.json();
-      onSubmitProps.resetForm();
-
-      if (savedUser) {
-        setPageType("login");
-      }
-    } catch (error) {
-      console.error("Error registering user:", error);
+    if (savedUser) {
+      setPageType("login");
     }
   };
 
   const login = async (values, onSubmitProps) => {
-    try {
-      const loggedInResponse = await fetch(
-        "http://localhost:8000/auth/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(values),
-        }
+    const loggedInResponse = await fetch("http://localhost:8000/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
+    const loggedIn = await loggedInResponse.json();
+    onSubmitProps.resetForm();
+    if (loggedIn) {
+      dispatch(
+        setLogin({
+          user: loggedIn.user,
+          token: loggedIn.token,
+        })
       );
-
-      if (!loggedInResponse.ok) {
-        throw new Error("Failed to log in");
-      }
-
-      const loggedIn = await loggedInResponse.json();
-      onSubmitProps.resetForm();
-
-      if (loggedIn) {
-        dispatch(
-          setLogin({
-            user: loggedIn.user,
-            token: loggedIn.token,
-          })
-        );
-        navigate("/home");
-      }
-    } catch (error) {
-      console.error("Error logging in:", error);
+      navigate("/home");
     }
   };
 
@@ -124,6 +105,7 @@ const Form = () => {
   };
 
   return (
+    <div className="form-container"> 
     <Formik
       onSubmit={handleFormSubmit}
       initialValues={isLogin ? initialValuesLogin : initialValuesRegister}
@@ -172,6 +154,7 @@ const Form = () => {
                   helperText={touched.lastName && errors.lastName}
                   sx={{ gridColumn: "span 2" }}
                 />
+
                 <TextField
                   label="Occupation"
                   onBlur={handleBlur}
@@ -184,11 +167,13 @@ const Form = () => {
                   helperText={touched.occupation && errors.occupation}
                   sx={{ gridColumn: "span 4" }}
                 />
+
                 <Box
                   gridColumn="span 4"
                   border={`1px solid ${palette.neutral.medium}`}
                   borderRadius="5px"
                   p="1rem"
+                  mt="20px" 
                 >
                   <Dropzone
                     acceptedFiles=".jpg,.jpeg,.png"
@@ -205,13 +190,15 @@ const Form = () => {
                         sx={{ "&:hover": { cursor: "pointer" } }}
                       >
                         <input {...getInputProps()} />
-                        {!values.picture ? (
-                          <Typography>Add Picture Here</Typography>
+                       
+                        {values.picture ? (
+                          <img
+                            src={URL.createObjectURL(values.picture)}
+                            alt={values.picture.name}
+                            style={{ maxWidth: "100%", maxHeight: "150px" }}
+                          />
                         ) : (
-                          <FlexBetween>
-                            <Typography>{values.picture.name}</Typography>
-                            <EditOutlinedIcon />
-                          </FlexBetween>
+                          <Typography>Add Picture Here</Typography>
                         )}
                       </Box>
                     )}
@@ -280,6 +267,7 @@ const Form = () => {
         </form>
       )}
     </Formik>
+    </div>
   );
 };
 

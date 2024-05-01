@@ -3,28 +3,19 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import dotenv from "dotenv";
 
-
 dotenv.config({
   path: './.env'
-})
+});
 
 /* REGISTER USER */
 export const register = async (req, res) => {
-    console.log(req);
   try {
-    const {
-      firstName,
-      lastName,
-      email,
-      password,
-      picturePath,
-      friends,
-      occupation,
-    } = req.body;
+    const { firstName, lastName, email, password, picturePath, friends, occupation } = req.body;
 
-    const salt = await bcrypt.genSalt();
-    const passwordHash = await bcrypt.hash(password, salt);
+    // Hash password
+    const passwordHash = await bcrypt.hash(password, 10);
 
+    // Create new user object
     const newUser = new User({
       firstName,
       lastName,
@@ -36,8 +27,15 @@ export const register = async (req, res) => {
       viewedProfile: Math.floor(Math.random() * 10000),
       impressions: Math.floor(Math.random() * 10000),
     });
+
+    // Save user to database
     const savedUser = await newUser.save();
-    res.status(201).json(savedUser);
+
+    // Remove password from response
+    const userWithoutPassword = { ...savedUser._doc };
+    delete userWithoutPassword.password;
+
+    res.status(201).json(userWithoutPassword);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -47,15 +45,25 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    // Find user by email
     const user = await User.findOne({ email: email });
-    if (!user) return res.status(400).json({ msg: "User does not exist. " });
 
+    // If user does not exist, return error
+    if (!user) return res.status(400).json({ error: "User does not exist." });
+
+    // Check password
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ msg: "Invalid credentials. " });
+    if (!isMatch) return res.status(400).json({ error: "Invalid credentials." });
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    delete user.password;
-    res.status(200).json({ token, user });
+    // Sign JWT token
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    // Remove password from user object
+    const userWithoutPassword = { ...user._doc };
+    delete userWithoutPassword.password;
+
+    res.status(200).json({ token, user: userWithoutPassword });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

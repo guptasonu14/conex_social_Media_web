@@ -1,13 +1,62 @@
-.logo {
-    text-align: center;
-    margin-top: 20px; /* Adjust the top margin as needed */
+/* Login.css */
+/* Add a media query to hide the side image on screens smaller than 768px */
+@media (max-width: 768px) {
+  .side-image {
+    display: none;
   }
-  
-  .logo img {
-    width: 100%; /* Make the image responsive */
-    max-width: 180px; /* Set maximum width for larger screens */
-    height: auto; /* Maintain aspect ratio */
-    display: block; /* Remove extra space beneath the image */
-    margin: 0 auto; /* Center the image within its container */
+}
+
+
+
+.gradient-custom-2 {
+  /* fallback for old browsers */
+  background: #fccb90;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+  /* Adding shadow */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Adjust shadow as needed */
+}
+
+@media (min-width: 768px) {
+  .gradient-form {
+    height: 100vh !important;
   }
-  
+
+  .content-column {
+    height: 100vh;
+  }
+
+  .side-image-column {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media (min-width: 769px) {
+  .gradient-custom-2 {
+    border-top-right-radius: .3rem;
+    border-bottom-right-radius: .3rem;
+  }
+}
+.side-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.side-image {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 3rem;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Hide side image on screens smaller than lg (992px) */
+@media (max-width: 991.98px) {
+  .side-image-container {
+    display: none;
+  }
+}
+

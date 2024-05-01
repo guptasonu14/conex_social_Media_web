@@ -1,105 +1,31 @@
-const router = require("express").Router();
-const User = require("../models/User");
-const Post = require("../models/Blog");
-const cloudinary = require("cloudinary").v2;
+import express from "express";
+import {
+  createBlog,
+  updateBlog,
+  deleteBlog,
+  getBlogById,
+  getAllBlogs,
+} from "../controllers/blog.js";
 
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.API_KEY,
-  api_secret: process.env.API_SECRET,
-});
+import { verifyToken } from "../middleware/auth.js";
 
-//CREATE POST
-router.post("/", async (req, res) => {
-  // const newPost = new Post(req.body);
-  try {
-    if (!req.files || !req.files.image) {
-      return res.status(400).json({ message: "No file uploaded" });
-    }
-    const file = req.files.image;
-    const result = await cloudinary.uploader.upload(file.tempFilePath, {
-      folder: "images",
-      resource_type: "auto",
-      public_id: `${Date.now()}`,
-    });
+const router = express.Router();
 
-    const {title,desc,username} = req.body
-    const newPost = new Post({username,title,desc,photo:result.secure_url})
-    const savedPost = await newPost.save();
-    res.status(200).json(savedPost);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+// router.use(verifyToken);
 
-//UPDATE POST
-router.put("/:id", async (req, res) => {
-  try {
-    const post = await Post.findById(req.params.id);
-    if (post.username === req.body.username) {
-      try {
-        const updatedPost = await Post.findByIdAndUpdate(
-          req.params.id,
-          {
-            $set: req.body,
-          },
-          { new: true }
-        );
-        res.status(200).json(updatedPost);
-      } catch (err) {
-        res.status(500).json(err);
-      }
-    } else {
-      res.status(401).json("You can update only your post!");
-    }
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+// CREATE BLOG
+router.post("/", verifyToken,createBlog);
 
-//DELETE POST
-router.delete("/:id", async (req, res) => {
-  try {
-    const post = await Post.findById(req.params.id);
-    if (post.username === req.body.username) {
-      try {
-        await Post.findByIdAndDelete(req.params.id);
-        res.status(200).json("Post has been deleted...");
-      } catch (err) {
-        res.status(500).json(err);
-      }
-    } else {
-      res.status(401).json("You can delete only your post!");
-    }
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+// UPDATE BLOG
+router.put("/:id", updateBlog);
 
-//GET POST
-router.get("/:id", async (req, res) => {
-  try {
-    const post = await Post.findById(req.params.id);
-    res.status(200).json(post);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+// DELETE BLOG
+router.delete("/:id", deleteBlog);
 
-//GET ALL POSTS
-router.get("/", async (req, res) => {
-  const username = req.query.user;
-  try {
-    let posts;
-    if (username) {
-      posts = await Post.find({ username });
-    } else {
-      posts = await Post.find();
-    }
-    res.status(200).json(posts);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+// GET BLOG BY ID
+router.get("/:id", getBlogById);
 
-module.exports = router;
+// GET ALL BLOGS
+router.get("/", getAllBlogs);
+
+export default router;

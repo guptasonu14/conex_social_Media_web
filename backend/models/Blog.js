@@ -1,7 +1,11 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const BlogSchema = new mongoose.Schema(
   {
+    userId:{
+     type:String,
+     required:true,
+    },
     title: {
       type: String,
       required: true,
@@ -12,12 +16,12 @@ const BlogSchema = new mongoose.Schema(
       required: true,
     },
 
-    username: {
-      type: String,
-      required: true,
-    },
+   
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Blog", BlogSchema);
+
+const Blog =  mongoose.model("Blog", BlogSchema);
+
+export default Blog;

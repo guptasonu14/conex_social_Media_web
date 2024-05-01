@@ -1,9 +1,9 @@
+ 
 import { Box, useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Navbar from "../navbar/Navbar";
-import FriendListWidget from "../widgets/FreindListWidget"
 import MyPostWidget from "../widgets/MyPostWidget";
 import PostsWidget from "../widgets/PostsWidget";
 import UserWidget from "../widgets/UserWidget";
@@ -22,6 +22,7 @@ const ProfilePage = () => {
     const data = await response.json();
     setUser(data);
   };
+  
 
   useEffect(() => {
     getUser();
@@ -41,7 +42,7 @@ const ProfilePage = () => {
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
           <UserWidget userId={userId} picturePath={user.picturePath} />
           <Box m="2rem 0" />
-          <FriendListWidget userId={userId} />
+        
         </Box>
         <Box
           flexBasis={isNonMobileScreens ? "42%" : undefined}
