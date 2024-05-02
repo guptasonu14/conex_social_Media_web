@@ -12,10 +12,7 @@ export default function Sidebar() {
           alt=""
         />
         <p>
-          Hello, everyone! My name is Rishabh Rai, and I am currently
-          pursuing my Bachelor of Technology (B.Tech) in Computer Science. I am
-          passionate about exploring the fascinating world of technology and its
-          applications
+         hello
         </p>
       </div>
 
