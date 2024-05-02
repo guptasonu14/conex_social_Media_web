@@ -19,26 +19,26 @@ const ads = [
     sponsor: "The Cookhouse",
     website: "cookhouse.com",
     description: "Fast and yummy.Good for your tummy",
-    image: "https://conex-clone.onrender.com/assets/info2.png",
+    image: "https://conex-social-media-web-4fwr.vercel.app/assets/info2.png",
   },
   {
     sponsor: "Moire",
     website: "Moirefashion.com",
     description: "Unleash your inner fashionista",
-    image: "https://conex-clone.onrender.com/assets/info3.png",
+    image: "https://conex-social-media-web-4fwr.vercel.app/assets/info3.png",
   },
   {
     sponsor: "Realgreatsite",
     website: "realgreatsite.com",
     description: "Wherever life plants you,bloom with decor!",
-    image: "https://conex-clone.onrender.com/assets/info4.png",
+    image: "https://conex-social-media-web-4fwr.vercel.app/assets/info4.png",
   },
   {
     sponsor: "FitZone Fitness",
     website: "fitzone.com",
     description:
       "We belive that everyone deserves to be fit and healthy.Our gym offers a variety of classes and programs to fit all.",
-    image: "https://conex-clone.onrender.com/assets/info5.png",
+    image: "https://conex-social-media-web-4fwr.vercel.app/assets/info5.png",
   },
 ];
 

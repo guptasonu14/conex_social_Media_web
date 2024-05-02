@@ -12,7 +12,7 @@ const HomeArticle = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const res = await axios.get("https://conex-clone.onrender.com/blogs/" + search);
+                const res = await axios.get("https://conex-social-media-web-4fwr.vercel.app/blogs/" + search);
                 setBlogs(res.data);
             } catch (error) {
                 console.error("Error fetching posts:", error);

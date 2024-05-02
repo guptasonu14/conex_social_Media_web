@@ -39,7 +39,7 @@ export default function SinglePost() {
 
   useEffect(() => {
     const getPost = async () => {
-      const res = await axios.get("https://conex-clone.onrender.com/blogs/" + Id);
+      const res = await axios.get("https://conex-social-media-web-4fwr.vercel.app/blogs/" + Id);
       setPost(res.data);
       setTitle(res.data.title);
       setDesc(res.data.desc);
@@ -49,7 +49,7 @@ export default function SinglePost() {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`https://conex-clone.onrender.com/blogs/${post._id}`, {
+      await axios.delete(`https://conex-social-media-web-4fwr.vercel.app/blogs/${post._id}`, {
 
         data: { userId: userData.userId }, 
 
@@ -62,7 +62,7 @@ export default function SinglePost() {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`https://conex-clone.onrender.com/blogs/${post._id}`, {
+      await axios.put(`https://conex-social-media-web-4fwr.vercel.app/blogs/${post._id}`, {
 
         userId: userData.userId, 
         title,

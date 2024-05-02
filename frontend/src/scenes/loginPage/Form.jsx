@@ -66,7 +66,7 @@ const Form = () => {
     console.log(formData);
 
     const savedUserResponse = await fetch(
-      "https://conex-clone.onrender.com/auth/register",
+      "https://conex-social-media-web-4fwr.vercel.app/auth/register",
       {
         method: "POST",
         body: formData,
@@ -81,7 +81,7 @@ const Form = () => {
   };
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("https://conex-clone.onrender.com/auth/login", {
+    const loggedInResponse = await fetch("https://conex-social-media-web-4fwr.vercel.app/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
