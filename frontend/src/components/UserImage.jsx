@@ -9,7 +9,7 @@ const UserImage = ({ image, size = "60px" }) => {
         width={size}
         height={size}
         alt="user"
-        src={`https://conex-social-media-web-4fwr.vercel.app/assets/${image}`}
+        src={`https://conex-clone.onrender.com/assets/${image}`}
       />
     </Box> 
   );
