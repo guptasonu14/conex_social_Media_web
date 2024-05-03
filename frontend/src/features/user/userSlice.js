@@ -6,7 +6,7 @@ export const loginUser = (credentials) => async (dispatch) => {
     dispatch({ type: LOGIN_START });
 
     // Assuming you have an API endpoint for user login
-    const response = await axios.post("http://localhost:8000/auth/login", credentials);
+    const response = await axios.post("https://conex-clone.onrender.com/auth/login", credentials);
 
     // Assuming the response.data includes user information with userId
     const userData = response.data;

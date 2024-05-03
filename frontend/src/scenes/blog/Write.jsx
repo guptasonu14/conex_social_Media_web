@@ -15,7 +15,7 @@ export default function Write() {
 
   const instance = axios.create({
     withCredentials: true,
-    baseURL: 'https://conex-social-media-web-4fwr.vercel.app/'
+    baseURL: 'https://conex-clone.onrender.com'
   })
 
   const handleSubmit = async (e) => {

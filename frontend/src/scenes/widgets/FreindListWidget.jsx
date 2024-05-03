@@ -38,7 +38,7 @@ const FriendListWidget = ({ userId }) => {
 
   const getFriends = async () => {
     const response = await fetch(
-      `https://conex-social-media-web-4fwr.vercel.app/users/${userId}/friends`,
+      `https://conex-clone.onrender.com/users/${userId}/friends`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
