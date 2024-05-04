@@ -35,6 +35,7 @@ app.use(morgan("dev"));
 
 app.use(cors({
    origin: process.env.CORS_ORIGIN, 
+   methods:["POST","GET"],
    credentials: true 
 }));
 

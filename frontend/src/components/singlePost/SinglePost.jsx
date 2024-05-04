@@ -21,7 +21,9 @@ export default function SinglePost() {
   const [updateMode, setUpdateMode] = useState(false);
 
   const [blogs, setBlogs] = useState([]);
-    const { search } = useLocation();
+ const { search } = useLocation();
+
+ axios.defaults.withCredentials = true;
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -30,7 +32,7 @@ export default function SinglePost() {
                 setBlogs(res.data);
             } catch (error) {
                 console.error("Error fetching posts:", error);
-                console.error("Error details:", error.response); // Log the error details
+                console.error("Error details:", error.response); 
             }
         };
     

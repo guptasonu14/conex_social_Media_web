@@ -1,0 +1,10 @@
+{
+    "version": 2,
+    "name": "social-media",
+    "builds": [
+       { "src": ".js", "use": "@vercel/node" }
+    ],
+    "routes": [
+       { "src": "/(.*)", "dest": "/" }
+    ]
+ }
