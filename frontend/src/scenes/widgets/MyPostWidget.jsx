@@ -47,7 +47,7 @@ const MyPostWidget = ({ picturePath }) => {
       formData.append("picturePath", image.name);
     }
   
-    const response = await fetch(`https://conex-clone.onrender.com/posts`, {
+    const response = await fetch(`https://conex-social-media-web.vercel.app/posts`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
       body: formData,

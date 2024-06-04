@@ -43,7 +43,7 @@ const PostWidget = ({
 
   const patchLike = async () => {
     try {
-      const response = await fetch(`https://conex-clone.onrender.com/posts/${postId}/like`, {
+      const response = await fetch(`https://conex-social-media-web.vercel.app/posts/${postId}/like`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -60,7 +60,7 @@ const PostWidget = ({
 
   const handleCommentSubmit = async () => {
     try {
-      const response = await fetch(`https://conex-clone.onrender.com/posts/${postId}/comment`, {
+      const response = await fetch(`https://conex-social-media-web.vercel.app/posts/${postId}/comment`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -95,7 +95,7 @@ const PostWidget = ({
           height="auto"
           alt="post"
           style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-          src={`https://conex-clone.onrender.com/assets/${picturePath}`}
+          src={`https://conex-social-media-web.vercel.app/assets/${picturePath}`}
         />
       )}
       <FlexBetween mt="0.25rem">
